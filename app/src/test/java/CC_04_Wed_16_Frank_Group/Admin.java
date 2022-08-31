@@ -1,4 +1,14 @@
 package CC_04_Wed_16_Frank_Group;
 
-public class Admin {
+public class Admin extends User{
+
+    public Admin(){
+
+    }
+
+    public void addNewCurrency(){
+        
+    }
+
+
 }
