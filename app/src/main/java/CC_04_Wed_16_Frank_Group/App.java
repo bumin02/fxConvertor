@@ -3,12 +3,25 @@
  */
 package CC_04_Wed_16_Frank_Group;
 
+import java.io.IOException;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    Converter converter;
+
+    public App(){
+        converter = new Converter();
+
+
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+    public static void main(String[] args) throws IOException {
+        DataBase d = new DataBase();
+        try{
+            d.initialiseData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
