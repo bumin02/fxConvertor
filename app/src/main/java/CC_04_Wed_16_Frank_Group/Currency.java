@@ -15,7 +15,7 @@ public class Currency {
         this.conversionRate.put(name, rate);
     }
 
-    public HashMap<String, Double> getConversionRate() {
+    public HashMap<String, Double> getConversionRates() {
         return this.conversionRate;
     }
 }

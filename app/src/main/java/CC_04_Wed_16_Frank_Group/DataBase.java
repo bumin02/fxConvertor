@@ -18,7 +18,7 @@ public class DataBase {
 
     public void initialiseData() throws IOException{
         try {
-            File file = new File("/Users/jennylin/Desktop/Soft2412_Assignment_CC_04_Wed_16_Frank_Group-3-/app/src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             StringBuffer sb = new StringBuffer();
@@ -37,9 +37,10 @@ public class DataBase {
                     if (i == 0) {
                         currency = new Currency(a);
                         curr.add(currency);
+                    } else {
+                        String[] parser = a.split(":");
+                        currency.addConversionRate(parser[0], Double.parseDouble(parser[1]));
                     }
-                    String[] parser = a.split(":");
-                    currency.addConversionRate(parser[0], Double.parseDouble(parser[1]));
 
                     i += 1;
                 }
