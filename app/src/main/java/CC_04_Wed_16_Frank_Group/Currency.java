@@ -18,4 +18,9 @@ public class Currency {
     public HashMap<String, Double> getConversionRates() {
         return this.conversionRate;
     }
+
+    public String getName() {
+        return this.name;
+
+    }
 }
