@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 
 
 public class DataBase {
+
     HashMap<String, List<Currency>> currencies;
 
     public DataBase() {
@@ -81,14 +83,19 @@ public class DataBase {
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
         
         // find string date that is most recent
-        String date = "";
-        for (String key : this.currencies.keySet()) {
-            date = key;
+        Date mostRecentDate = new Date(0);
+        String mostRecentDateString = "";
+        for (String key: this.currencies.keySet()) {
+            Date date = new Date(key);
+            if (date.after(mostRecentDate)) {
+                mostRecentDate = date;
+                mostRecentDateString = key;
+            }
         }
 
         // find input currency on date
         Currency inputCurr = null;
-        for (Currency c : this.currencies.get(date)) {
+        for (Currency c : this.currencies.get(mostRecentDateString)) {
             if (c.getName().equals(inputCurrency)) {
                 inputCurr = c;
             }
