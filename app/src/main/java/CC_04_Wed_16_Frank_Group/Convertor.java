@@ -24,6 +24,12 @@ public class Convertor {
 
         String adminInput = sc.next();
 
+        if (!adminInput.toUpperCase().equals("Y") && 
+            !adminInput.toUpperCase().equals("N")) {
+            System.out.println("\nInvalid input. Please try again.\n");
+            runConvertor();
+        }
+
         if (adminInput.toUpperCase().equals("Y")) {
 
             System.out.print("Enter password: ");
@@ -72,13 +78,19 @@ public class Convertor {
             switch (input) {
                 case 1:
 
-                    // todo: check for valid currency input
                     System.out.print("Input convert from currency: ");
                     String cur1 = sc.next().toUpperCase();
+                    if (!db.getCurrencyNames().contains(cur1)) {
+                        System.out.println("Invalid currency. We do not store that currency in our system. Please try again.");
+                        break;
+                    }
 
-                    // todo: check for valid currency input
                     System.out.print("Input convert to currency: ");
                     String cur2 = sc.next().toUpperCase();
+                    if (!db.getCurrencyNames().contains(cur2)) {
+                        System.out.println("Invalid currency. We do not store that currency in our system. Please try again.");
+                        break;
+                    }
 
                     System.out.print("Input amount: ");
                     float conversionAmount = sc.nextFloat();
@@ -92,11 +104,13 @@ public class Convertor {
                     break;
 
                 case 2:
+
                     //TODO
                     // Method here to print table of currencies e.g. currencyTable.displayTable();
                     // Need to identify whether to display arrows or not
 
                     break;
+
                 case 3:
                     System.out.print("Enter date 1 (DD/MM/YY): ");
                     String date1 = sc.next();

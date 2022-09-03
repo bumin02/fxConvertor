@@ -59,6 +59,25 @@ public class DataBase {
         return this.currencies;
     }
 
+    public List<String> getCurrencyNames() {
+
+        List<String> currencyNames = new ArrayList<>();
+        
+        for (String key: this.currencies.keySet()) {
+
+            for (Currency currency: this.currencies.get(key)) {
+
+                if (!currencyNames.contains(currency.getName())) {
+                    currencyNames.add(currency.getName());
+                }
+            }
+
+        }
+
+        return currencyNames;
+        
+    }
+
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
         
         // find string date that is most recent
@@ -87,8 +106,6 @@ public class DataBase {
         return amount * conversionRate;
 
     }
-
-
 
 
 }
