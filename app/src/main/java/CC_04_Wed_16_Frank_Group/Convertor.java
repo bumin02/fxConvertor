@@ -1,12 +1,18 @@
 package CC_04_Wed_16_Frank_Group;
 
-import java.util.Scanner;  
+import java.util.Scanner;
 
 public class Convertor {
 
     private String password = "admin";
     private Boolean isAdmin = false;
-    
+    private DataBase db;
+
+    public Convertor() {
+
+        this.db = new DataBase();
+
+    }
 
     public void runConvertor() {
 
@@ -65,21 +71,30 @@ public class Convertor {
             
             switch (input) {
                 case 1:
-                    System.out.print("Input convert from currency: ");
-                    String cur1 = sc.next();
-                    System.out.print("Input convert to currency: ");
-                    String cur2 = sc.next();
-                    System.out.print("Input amount: ");
-                    float converionAmount = sc.nextFloat();
-                    System.out.println("Converting $" + converionAmount + " " + cur1 + " to " + cur2 + ". ");
 
-                    //TODO
-                    // Method call here to convert e.g. database.convert(cur1, cur2, amount);
+                    // todo: check for valid currency input
+                    System.out.print("Input convert from currency: ");
+                    String cur1 = sc.next().toUpperCase();
+
+                    // todo: check for valid currency input
+                    System.out.print("Input convert to currency: ");
+                    String cur2 = sc.next().toUpperCase();
+
+                    System.out.print("Input amount: ");
+                    float conversionAmount = sc.nextFloat();
+                    
+                    System.out.println("Converting $" + conversionAmount + " " + cur1 + " to " + cur2 + ". ");
+
+                    float convertedAmount = db.convertCurrency(cur1, cur2, conversionAmount);
+
+                    System.out.println("Result: $" + convertedAmount + " " + cur2);
+
                     break;
 
                 case 2:
                     //TODO
                     // Method here to print table of currencies e.g. currencyTable.displayTable();
+                    // Need to identify whether to display arrows or not
 
                     break;
                 case 3:

@@ -13,10 +13,11 @@ public class DataBase {
     HashMap<String, List<Currency>> currencies;
 
     public DataBase() {
-        currencies = new HashMap<>();
+        this.currencies = new HashMap<>();
+        initialiseData();
     }
 
-    public void initialiseData() throws IOException{
+    public void initialiseData(){
         try {
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
             FileReader fr = new FileReader(file);
@@ -56,6 +57,35 @@ public class DataBase {
 
     public HashMap<String, List<Currency>> getCurrencies() {
         return this.currencies;
+    }
+
+    public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
+        
+        // find string date that is most recent
+        String date = "";
+        for (String key : this.currencies.keySet()) {
+            date = key;
+        }
+
+        // find input currency on date
+        Currency inputCurr = null;
+        for (Currency c : this.currencies.get(date)) {
+            if (c.getName().equals(inputCurrency)) {
+                inputCurr = c;
+            }
+        }
+
+        // find conversion rate to output currency
+        float conversionRate = 0;
+        for (String key : inputCurr.getConversionRates().keySet()) {
+            if (key.equals(outputCurrency)) {
+                conversionRate = inputCurr.getConversionRates().get(key).floatValue();
+            }
+        }
+
+        // return converted amount
+        return amount * conversionRate;
+
     }
 
 
