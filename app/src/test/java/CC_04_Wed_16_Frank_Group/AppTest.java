@@ -3,9 +3,5 @@
  */
 package CC_04_Wed_16_Frank_Group;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 class AppTest {
-    
 }
