@@ -4,8 +4,4 @@
 package CC_04_Wed_16_Frank_Group;
 
 class AppTest {
-//    @Test void appHasAGreeting() {
-//        App classUnderTest = new App();
-//        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-//    }
 }
