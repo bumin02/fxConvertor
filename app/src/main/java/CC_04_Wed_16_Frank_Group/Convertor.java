@@ -7,10 +7,12 @@ public class Convertor {
     private String password = "admin";
     private Boolean isAdmin = false;
     private DataBase db;
+    private CurrencyTable ct;
 
     public Convertor() {
 
         this.db = new DataBase();
+        this.ct = new CurrencyTable();
 
     }
 
@@ -105,8 +107,7 @@ public class Convertor {
 
                 case 2:
 
-                    //TODO
-                    // Method here to print table of currencies e.g. currencyTable.displayTable();
+                    this.ct.display(this.db);
                     // Need to identify whether to display arrows or not
 
                     break;
@@ -147,6 +148,7 @@ public class Convertor {
                     
                     break;
                 case 5:
+                
                     if (isAdmin) {
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
