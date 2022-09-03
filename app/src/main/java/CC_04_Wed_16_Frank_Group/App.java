@@ -3,12 +3,15 @@
  */
 package CC_04_Wed_16_Frank_Group;
 
+import java.util.Scanner;  
+
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        Convertor convertor = new Convertor();
+
+        convertor.runConvertor();
     }
 }
