@@ -23,6 +23,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.json:json:20211205'
 }
 
 application {
@@ -38,10 +39,12 @@ tasks.named('test') {
 
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
-    
+
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                "**/App.class"
+                    "**/App.class"
             ])
         }))
+    }
+}
