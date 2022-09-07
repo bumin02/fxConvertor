@@ -25,11 +25,12 @@ public class CurrencyTable {
         return null;
     }
 
-    public void display() {
+    public void display(DataBase database) {
 
-        DataBase database = new DataBase();
-
-        List<Currency> currencies = database.currencies.get(todayDate);
+        // todo: fix harcoded date
+        // todo: extend for arbitrary number of currencies
+        
+        List<Currency> currencies = database.currencies.get("31/08/22");
         HashMap<String, Double> aud = findCurrency("AUD", currencies).getConversionRates();
         HashMap<String, Double> usd = findCurrency("USD", currencies).getConversionRates();
         HashMap<String, Double> cny = findCurrency("CNY", currencies).getConversionRates();
