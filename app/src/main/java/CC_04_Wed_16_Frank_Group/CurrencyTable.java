@@ -36,19 +36,26 @@ public class CurrencyTable {
         HashMap<String, Double> cny = findCurrency("CNY", currencies).getConversionRates();
         HashMap<String, Double> eur = findCurrency("EUR", currencies).getConversionRates();
 
-        System.out.println("_____________________________________________________");
+        System.out.println("___________________________________________________________");
 
-        System.out.println("| From/To | AUD | USD | CNY | EUR |");
-        System.out.printf("|   %6s   | %6s | %6s | %6s | %6s |", "From/To", "AUD", "USD", "CNY", "EUR");
-        System.out.println("-----------------------------------------------------");
-        System.out.printf("|   AUD   | %6s | %6s | %6s | %6s |", "-", aud.get("USD"), aud.get("CNY"), aud.get("EUR"));
-        System.out.println("-----------------------------------------------------");
-        System.out.printf("|   USD   | %6s | %6s | %6s | %6s |", usd.get("AUD"), "-", usd.get("CNY"), usd.get("EUR"));
-        System.out.println("-----------------------------------------------------");
-        System.out.printf("|   CNY   | %6s | %6s | %6s | %6s |", cny.get("AUD"), cny.get("USD"), "-", cny.get("EUR"));
-        System.out.println("-----------------------------------------------------");
-        System.out.printf("|   EUR   | %6s | %6s | %6s | %6s |", eur.get("AUD"), cny.get("USD"), cny.get("CNY"), "-");
-        System.out.println("_____________________________________________________");
+        System.out.printf("|   %6s   | %6s   | %6s   | %6s   | %6s   |\n", "From/To", "AUD", "USD", "CNY", "EUR");
+        System.out.println("-----------------------------------------------------------");
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.printf("|     AUD     |%6s    | %.6f | %.6f | %.6f |\n", "-", aud.get("USD"), aud.get("CNY"), aud.get("EUR"));
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.println("-----------------------------------------------------------");
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.printf("|     USD     | %6f |%6s    | %6f | %6f |\n", usd.get("AUD"), "-", usd.get("CNY"), usd.get("EUR"));
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.println("-----------------------------------------------------------");
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.printf("|     CNY     | %6f | %6f |%6s    | %6f |\n", cny.get("AUD"), cny.get("USD"), "-", cny.get("EUR"));
+        System.out.printf("|             |          |          |          |          |\n"); 
+        System.out.println("-----------------------------------------------------------");
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.printf("|     EUR     | %6f | %6f | %6f |%6s    |\n", eur.get("AUD"), eur.get("USD"), eur.get("CNY"), "-");
+        System.out.printf("|             |          |          |          |          |\n");
+        System.out.println("-----------------------------------------------------------");
 
     }
 }
