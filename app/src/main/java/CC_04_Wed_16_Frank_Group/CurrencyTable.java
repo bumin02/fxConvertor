@@ -37,7 +37,6 @@ public class CurrencyTable {
         HashMap<String, Double> eur = findCurrency("EUR", currencies).getConversionRates();
 
         System.out.println("___________________________________________________________");
-
         System.out.printf("|   %6s   | %6s   | %6s   | %6s   | %6s   |\n", "From/To", "AUD", "USD", "CNY", "EUR");
         System.out.println("-----------------------------------------------------------");
         System.out.printf("|             |          |          |          |          |\n");
