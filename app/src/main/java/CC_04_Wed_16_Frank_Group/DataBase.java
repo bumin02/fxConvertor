@@ -54,7 +54,6 @@ public class DataBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public HashMap<String, List<Currency>> getCurrencies() {
@@ -102,6 +101,11 @@ public class DataBase {
         }
 
         // find conversion rate to output currency
+        if (inputCurr == null) {
+            System.out.println("Cannot find currency\n");
+            return -1;
+        }
+
         float conversionRate = 0;
         for (String key : inputCurr.getConversionRates().keySet()) {
             if (key.equals(outputCurrency)) {
