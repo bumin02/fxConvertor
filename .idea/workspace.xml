@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8afce8b2-2361-459e-8175-fa63abeb949a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/Currency.java" afterDir="false" />
+    <list default="true" id="43ad0e4a-5379-466c-8d79-7b0ec6c75d6c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/CC_04_Wed_16_Frank_Group/DataBaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/CurrencyTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/CurrencyTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/CC_04_Wed_16_Frank_Group/DataBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -31,72 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="2E7Qw7wfzxROs85oJSQtA6KPELp" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
-  <component name="RunManager" selected="Application.App">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CC_04_Wed_16_Frank_Group.App" />
-      <module name="CC_04_Wed_16_Frank_Group-3.app.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="CC_04_Wed_16_Frank_Group.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DataBase" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CC_04_Wed_16_Frank_Group.DataBase" />
-      <module name="CC_04_Wed_16_Frank_Group-3.app.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="CC_04_Wed_16_Frank_Group.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Soft2412_Assignment_CC_04_Wed_16_Frank_Group-3-" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Soft2412_Assignment_CC_04_Wed_16_Frank_Group-3-" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-        <item itemvalue="Application.DataBase" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="8afce8b2-2361-459e-8175-fa63abeb949a" name="Changes" comment="" />
-      <created>1661944379781</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1661944379781</updated>
-    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
