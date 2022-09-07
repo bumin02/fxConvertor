@@ -3,9 +3,6 @@
  */
 package CC_04_Wed_16_Frank_Group;
 
-import java.util.Scanner;  
-
-
 public class App {
 
     public static void main(String[] args) {
