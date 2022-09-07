@@ -16,7 +16,7 @@ public class CurrencyTable {
     int TABLE_SIZE = 4;
     String todayDate = "3/9/22"; // somehow adjust date
 
-    public Currency findCurrency(String name, List<Currency> currencies) {
+    public static Currency findCurrency(String name, List<Currency> currencies) {
         for (Currency a : currencies) {
             if (a.getName().equals(name)) {
                 return a;
