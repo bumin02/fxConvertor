@@ -2,13 +2,6 @@ package CC_04_Wed_16_Frank_Group;
 
 import java.util.HashMap;
 import java.util.*;
-// import org.json.simple.JSONObject;
-// import org.json.simple.JSONArray;
-// import processing.data.JSONArray;
-// import processing.data.JSONObject;
-// import org.json.simple.JSONObject;
-// import org.json.simple.parser.ParseException;
-// import org.json.simple.parser.JSONParser;
 
 
 public class CurrencyTable {
