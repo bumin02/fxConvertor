@@ -1,7 +1,7 @@
 package CC_04_Wed_16_Frank_Group;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 // import org.json.simple.JSONObject;
 // import org.json.simple.JSONArray;
 // import processing.data.JSONArray;
@@ -14,7 +14,6 @@ import java.util.List;
 public class CurrencyTable {
 
     int TABLE_SIZE = 4;
-    String todayDate = "3/9/22"; // somehow adjust date
 
     public static Currency findCurrency(String name, List<Currency> currencies) {
         for (Currency a : currencies) {
@@ -26,36 +25,44 @@ public class CurrencyTable {
     }
 
     public void display(DataBase database) {
-
-        // todo: fix harcoded date
-        // todo: extend for arbitrary number of currencies
         
-        List<Currency> currencies = database.currencies.get("31/08/22");
-        HashMap<String, Double> aud = findCurrency("AUD", currencies).getConversionRates();
-        HashMap<String, Double> usd = findCurrency("USD", currencies).getConversionRates();
-        HashMap<String, Double> cny = findCurrency("CNY", currencies).getConversionRates();
-        HashMap<String, Double> eur = findCurrency("EUR", currencies).getConversionRates();
+        List<Currency> currencies = database.currencies.get(database.findMostRecentDate());
 
-        System.out.println("___________________________________________________________");
+        // Find all the popular currencies and store in list
+        List<String> popularCurrencies = new ArrayList<>();
+        for (Currency a : currencies) {
+            if (a.isPopular()) {
+                popularCurrencies.add(a.getName().toUpperCase());
+            }
+        }
 
-        System.out.printf("|   %6s   | %6s   | %6s   | %6s   | %6s   |\n", "From/To", "AUD", "USD", "CNY", "EUR");
-        System.out.println("-----------------------------------------------------------");
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.printf("|     AUD     |%6s    | %.6f | %.6f | %.6f |\n", "-", aud.get("USD"), aud.get("CNY"), aud.get("EUR"));
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.println("-----------------------------------------------------------");
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.printf("|     USD     | %6f |%6s    | %6f | %6f |\n", usd.get("AUD"), "-", usd.get("CNY"), usd.get("EUR"));
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.println("-----------------------------------------------------------");
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.printf("|     CNY     | %6f | %6f |%6s    | %6f |\n", cny.get("AUD"), cny.get("USD"), "-", cny.get("EUR"));
-        System.out.printf("|             |          |          |          |          |\n"); 
-        System.out.println("-----------------------------------------------------------");
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.printf("|     EUR     | %6f | %6f | %6f |%6s    |\n", eur.get("AUD"), eur.get("USD"), eur.get("CNY"), "-");
-        System.out.printf("|             |          |          |          |          |\n");
-        System.out.println("-----------------------------------------------------------");
+        HashMap<String, Double> pop1 = findCurrency(popularCurrencies.get(0), currencies).getConversionRates();
+        HashMap<String, Double> pop2 = findCurrency(popularCurrencies.get(1), currencies).getConversionRates();
+        HashMap<String, Double> pop3 = findCurrency(popularCurrencies.get(2), currencies).getConversionRates();
+        HashMap<String, Double> pop4 = findCurrency(popularCurrencies.get(3), currencies).getConversionRates();
+
+        // todo: limit floats to 6 DIGITS in total, not 6 DECIMAL PLACES
+
+        System.out.println("_____________________________________________________________________");
+
+        System.out.printf("|    %6s    |  %6s    |  %6s    |  %6s    |  %6s    |\n", "From/To", popularCurrencies.get(0), popularCurrencies.get(1), popularCurrencies.get(2), popularCurrencies.get(3));
+        System.out.println("---------------------------------------------------------------------");
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.printf("|  %6s       | %6s     |  %.6f  |  %.6f  |  %.6f  |\n", popularCurrencies.get(0), "-", pop1.get(popularCurrencies.get(1)), pop1.get(popularCurrencies.get(2)), pop1.get(popularCurrencies.get(3)));
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.println("---------------------------------------------------------------------");
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.printf("|  %6s       |  %6f  | %6s     |  %6f  |  %6f  |\n", popularCurrencies.get(1), pop2.get(popularCurrencies.get(0)), "-", pop2.get(popularCurrencies.get(2)), pop2.get(popularCurrencies.get(3)));
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.println("---------------------------------------------------------------------");
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.printf("|  %6s       |  %6f  |  %6f  | %6s     |  %6f  |\n", popularCurrencies.get(2), pop3.get(popularCurrencies.get(0)), pop3.get(popularCurrencies.get(1)), "-", pop3.get(popularCurrencies.get(3)));
+        System.out.printf("|               |            |            |            |            |\n"); 
+        System.out.println("---------------------------------------------------------------------");
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.printf("|  %6s       |  %6f  |  %6f  |  %6f  | %6s     |\n", popularCurrencies.get(3), pop4.get(popularCurrencies.get(0)), pop4.get(popularCurrencies.get(1)), pop4.get(popularCurrencies.get(2)), "-");
+        System.out.printf("|               |            |            |            |            |\n");
+        System.out.println("---------------------------------------------------------------------");
 
     }
 }
