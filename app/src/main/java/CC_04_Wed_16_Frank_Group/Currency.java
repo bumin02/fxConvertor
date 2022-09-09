@@ -29,7 +29,7 @@ public class Currency {
         return this.isPopular;
     }
 
-    public void setPopular() {
-        this.isPopular = true;
+    public void setPopular(boolean flag) {
+        this.isPopular = flag;
     }
 }

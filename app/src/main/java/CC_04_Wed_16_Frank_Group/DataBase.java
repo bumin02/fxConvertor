@@ -67,7 +67,7 @@ public class DataBase {
                 for (String a : arrOfStr) {
                     for (Currency c : curr) {
                         if (c.getName().equals(a)) {
-                            c.setPopular();
+                            c.setPopular(true);
                         }
                     }
                 }
