@@ -167,6 +167,7 @@ public class Convertor {
                          *  be persisted for the below functionalities.
                          *  e.g. database.updateCurrency(date2day, currency2Update);
                          */
+                        db.writeToFile();
                     }
                     break;
                 case 6:
