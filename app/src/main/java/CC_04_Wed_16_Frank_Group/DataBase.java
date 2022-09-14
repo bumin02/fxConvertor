@@ -232,7 +232,7 @@ public class DataBase {
         try {
 
 
-            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/testData.txt");
+            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
 
             //detele file if it exists
             if (file.exists()) {

@@ -147,6 +147,7 @@ public class Convertor {
 
                     if (exNum.equals("1")) {
                         toExit = true;
+                        db.writeToFile();
                     }
                     System.out.println("-------------------");
 
@@ -171,7 +172,6 @@ public class Convertor {
                          * be persisted for the below functionalities.
                          * e.g. database.updateCurrency(date2day, currency2Update);
                          */
-                        db.writeToFile();
                     }
                     break;
 
