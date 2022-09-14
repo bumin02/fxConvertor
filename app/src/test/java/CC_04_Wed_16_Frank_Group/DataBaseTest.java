@@ -43,6 +43,12 @@ public class DataBaseTest {
         assertNotNull(CurrencyTable.findCurrency("EUR", currencyList));
         assertNotNull(CurrencyTable.findCurrency("GBP", currencyList));
         assertNotNull(CurrencyTable.findCurrency("JPY", currencyList));
+    }
+
+    @Test
+    @DisplayName("Validate conversion rate update")
+    public void testUpdateConversionRate() {
+
 
     }
 

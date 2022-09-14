@@ -167,7 +167,46 @@ public class DataBase {
         }
 
         return secondMostRecentDateString;
+    }
 
+    public Currency findCurrency(String name, List<Currency> ls) {
+        for (Currency c : ls) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    // update the rate of currency1 in currency2's hashmap
+    // please check the format of date prior to this method
+    // return 1 if successful
+    // 0 if input error, particularly null data
+    // 2 if no currency is found
+    // 3 if currency1 not found
+    public int updateCurrency(String date, String currency1, String currency2, Double newRate1) {
+        // check all input not null
+        if (date == null || currency2 == null || currency1 == null || newRate1 == null) {
+            return 0;
+        }
+
+        String latest = findMostRecentDate();
+        List<Currency> cloned = this.currencies.get(latest);
+
+        // change the rate
+        Currency curr2 = findCurrency(currency2, cloned);
+        if (curr2 == null) {
+            return 2;
+        }
+
+        // update data
+        if (!curr2.getConversionRates().containsKey(currency1)) {
+            return 3;
+        }
+
+        curr2.getConversionRates().replace(currency1, newRate1);
+        this.currencies.put(date, cloned);
+        return(1);
     }
 
 }
