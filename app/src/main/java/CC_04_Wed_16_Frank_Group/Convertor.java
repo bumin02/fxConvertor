@@ -136,8 +136,22 @@ public class Convertor {
                      * This includes all conversion rates, average, median, maximum,
                      * minimum and standard deviation of the conversion rate of the 2
                      * currencies during the specified start and end date.
-                     * e.g. dataBase.summarise(date1, date2, c1, c2);
-                     **/
+<<<<<<< HEAD
+                     *  e.g. dataBase.summarise(date1, date2, c1, c2);
+                    **/
+                    System.out.println("Generating summaries:");
+                    System.out.println("***************************************************");
+                    System.out.println("MINIMUM: From " + c1 +  " to " + c2 + ": " + db.getMin(date1, date2, c1, c2)); 
+                    System.out.println("         From " + c2 + " to "  + c1 + ": "  + db.getMin(date1, date2, c2, c1));
+                    System.out.println("MAXIMUM: From " + c1 +  " to " + c2 + ": " + db.getMax(date1, date2, c1, c2));
+                    System.out.println("         From " + c2 + " to "  + c1 + ": "  +  db.getMax(date1, date2, c2, c1));
+                    System.out.println("MEAN:    From " + c1 +  " to " + c2 + ": " + db.getMean(date1, date2, c1, c2));
+                    System.out.println("         From " + c2 + " to "  + c1 + ": "  +  db.getMean(date1, date2, c2, c1));
+                    System.out.println("MEDIAN:  From " + c1 +  " to " + c2 + ": " + db.getMedian(date1, date2, c1, c2));
+                    System.out.println("         From " + c2 + " to "  + c1 + ": "  +  db.getMedian(date1, date2, c2, c1));
+                    System.out.println("Standard Deviation:  From " + c1 +  " to " + c2 + ": " + db.getSD(date1, date2, c1, c2));
+                    System.out.println("                     From " + c2 + " to "  + c1 + ": "  +  db.getSD(date1, date2, c2, c1));
+                    System.out.println("***************************************************");
 
                     break;
                 case 4:
