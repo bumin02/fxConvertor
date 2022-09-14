@@ -159,6 +159,11 @@ public class Convertor {
                         String date2Day = sc.next();
                         System.out.print("Which currency do you want to update: ");
                         String currency2Update = sc.next();
+                        System.out.print("Enter currency pair to update: ");
+                        String secondCurrency2Update = sc.next();
+                        System.out.print("Enter new conversion rate: ");
+                        double newConversionRate = sc.nextDouble();
+
 
                         // TODO
                         /**
@@ -172,6 +177,8 @@ public class Convertor {
                          * be persisted for the below functionalities.
                          * e.g. database.updateCurrency(date2day, currency2Update);
                          */
+
+                        db.updateCurrency(date2Day, currency2Update, secondCurrency2Update, newConversionRate);
                     }
                     break;
 

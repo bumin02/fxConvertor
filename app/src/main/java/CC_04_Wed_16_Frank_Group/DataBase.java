@@ -241,10 +241,16 @@ public class DataBase {
     // 0 if input error, particularly null data
     // 2 if no currency is found
     // 3 if currency1 not found
+    // 4 if the date already exists
     public int updateCurrency(String date, String currency1, String currency2, Double newRate1) {
         // check all input not null
         if (date == null || currency2 == null || currency1 == null || newRate1 == null) {
             return 0;
+        }
+
+        // check if date already exists
+        if (this.currencies.containsKey(date)) {
+            return 4;
         }
 
         String latest = findMostRecentDate();
