@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
-
 public class DataBase {
 
     HashMap<String, List<Currency>> currencies;
@@ -19,22 +18,36 @@ public class DataBase {
         initialiseData();
     }
 
-    public void initialiseData(){
+    public void initialiseData() {
         try {
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            StringBuffer sb = new StringBuffer();
+
             String line;
-            String date = br.readLine();
+            String date = "";
             ArrayList<Currency> curr = new ArrayList<>();
 
-
             while ((line = br.readLine()) != null) {
+
+                if (line.contains("date")) {
+
+                    if (curr.size() > 0 && !date.equals("")) {
+                        this.currencies.put(date, curr);
+                        date = line.substring(5);
+                        curr = new ArrayList<>();
+                    } else {
+                        date = line.substring(5);
+                        curr = new ArrayList<>();
+                    }
+
+                    continue;
+
+                }
+
                 String[] arrOfStr = line.split(" ");
                 int i = 0;
                 Currency currency = null;
-
 
                 for (String a : arrOfStr) {
                     if (i == 0) {
@@ -55,28 +68,6 @@ public class DataBase {
             br.close();
             fr.close();
 
-            // open popular.txt
-            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
-            FileReader fr2 = new FileReader(file2);
-            BufferedReader br2 = new BufferedReader(fr2);
-            StringBuffer sb2 = new StringBuffer();
-            String line2;
-
-            while ((line2 = br2.readLine()) != null) {
-                String[] arrOfStr = line2.split(",");
-                for (String a : arrOfStr) {
-                    for (Currency c : curr) {
-                        if (c.getName().equals(a)) {
-                            c.setPopular(true);
-                        }
-                    }
-                }
-            }
-
-            // close
-            br2.close();
-            fr2.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,10 +80,10 @@ public class DataBase {
     public List<String> getCurrencyNames() {
 
         List<String> currencyNames = new ArrayList<>();
-        
-        for (String key: this.currencies.keySet()) {
 
-            for (Currency currency: this.currencies.get(key)) {
+        for (String key : this.currencies.keySet()) {
+
+            for (Currency currency : this.currencies.get(key)) {
 
                 if (!currencyNames.contains(currency.getName())) {
                     currencyNames.add(currency.getName());
@@ -102,11 +93,11 @@ public class DataBase {
         }
 
         return currencyNames;
-        
+
     }
 
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
-        
+
         // find string date that is most recent
         String mostRecentDateString = findMostRecentDate();
 
@@ -140,7 +131,7 @@ public class DataBase {
 
         Date mostRecentDate = new Date(0);
         String mostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(mostRecentDate)) {
                 mostRecentDate = date;
@@ -157,7 +148,7 @@ public class DataBase {
 
         Date mostRecentDate = new Date(0);
         String mostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(mostRecentDate)) {
                 mostRecentDate = date;
@@ -167,7 +158,7 @@ public class DataBase {
 
         Date secondMostRecentDate = new Date(0);
         String secondMostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(secondMostRecentDate) && !date.equals(mostRecentDate)) {
                 secondMostRecentDate = date;
@@ -177,8 +168,6 @@ public class DataBase {
 
         return secondMostRecentDateString;
 
-
     }
-
 
 }
