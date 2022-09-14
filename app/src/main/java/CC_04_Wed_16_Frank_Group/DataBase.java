@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 import java.util.Collections;
 import java.lang.Math;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 public class DataBase {
 
@@ -99,6 +102,60 @@ public class DataBase {
 
     }
 
+    public List<String> findPopularCurrencies() {
+
+        try {
+
+            // open popular.txt
+            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            FileReader fr2 = new FileReader(file2);
+            BufferedReader br2 = new BufferedReader(fr2);
+            String line2;
+
+            List<String> popularCurrencies = new ArrayList<>();
+
+            while ((line2 = br2.readLine()) != null) {
+                String[] arrOfStr = line2.split(",");
+                for (String a : arrOfStr) {
+                    popularCurrencies.add(a);
+                }
+            }
+
+            // close
+            br2.close();
+            fr2.close();
+
+            return popularCurrencies;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public void updatePopularCurrencies(List<String> currencies) {
+
+        try {
+
+            // clear popular.txt
+            PrintWriter writer = new PrintWriter("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            writer.print("");
+
+            // write new popular currencies to popular.txt
+            for (String currency : currencies) {
+                writer.print(currency + ",");
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
 
         // find string date that is most recent
@@ -170,6 +227,107 @@ public class DataBase {
         }
 
         return secondMostRecentDateString;
+    }
+
+    public Currency findCurrency(String name, List<Currency> ls) {
+        for (Currency c : ls) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    // update the rate of currency1 in currency2's hashmap
+    // please check the format of date prior to this method
+    // return 1 if successful
+    // 0 if input error, particularly null data
+    // 2 if no currency is found
+    // 3 if currency1 not found
+    // 4 if the date already exists
+    public int updateCurrency(String date, String currency1, String currency2, Double newRate1) {
+        // check all input not null
+        if (date == null || currency2 == null || currency1 == null || newRate1 == null) {
+            return 0;
+        }
+
+        // check if date already exists
+        if (this.currencies.containsKey(date)) {
+            return 4;
+        }
+
+        String latest = findMostRecentDate();
+        List<Currency> cloned = new ArrayList<>();
+
+        // change the rate
+        Currency curr2 = findCurrency(currency2, this.currencies.get(latest));
+        if (curr2 == null) {
+            return 2;
+        }
+
+        // update data
+        if (!curr2.getConversionRates().containsKey(currency1)) {
+            return 3;
+        }
+
+        // create new currency and add to list
+        Currency c = new Currency(currency2);
+        cloned.add(c);
+
+        for (Currency i: this.currencies.get(latest)) {
+            if (i != curr2) {
+                cloned.add(i);
+            }
+        }
+
+        // update value in the new currency object
+        for (String i: curr2.getConversionRates().keySet()) {
+            if (!i.equals(currency1)) {
+                c.getConversionRates().put(i, curr2.getConversionRates().get(i));
+            }
+        }
+        c.getConversionRates().put(currency1, newRate1);
+        this.currencies.put(date, cloned);
+        return 1;
+    }
+
+    public void writeToFile() {
+
+        try {
+
+
+            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+
+            //detele file if it exists
+            if (file.exists()) {
+                file.delete();
+            }
+            //create new file with the same name
+            file.createNewFile();
+
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter br = new BufferedWriter(fr);
+            
+
+
+            for (String key : this.currencies.keySet()) {
+                br.write("date:" + key + "\n");
+                for (Currency c : this.currencies.get(key)) {
+                    br.write(c.getName() + " ");
+                    for (String key2 : c.getConversionRates().keySet()) {
+                        br.write(key2 + ":" + c.getConversionRates().get(key2) + " ");
+                    }
+                    br.write("\n");
+                }
+            }
+
+            // close file
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
