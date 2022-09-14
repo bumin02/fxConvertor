@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Date;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.util.Scanner;
 
 public class DataBase {
 
@@ -129,6 +130,48 @@ public class DataBase {
 
     }
 
+    public void addCurrency(String date2Day, String currency2Add) {
+        
+        Scanner sc = new Scanner(System.in);
+        // add to hashmap, which will then be fed into a txtfile
+        // addCurrency method calls writeToFile (?)
+        Currency currency = new Currency(currency2Add);
+        List<Currency> currenciesList = new ArrayList<>();
+
+        // find most recent date
+        String mostRecentCurrData = this.findMostRecentDate(); 
+
+        for (Currency c : this.currencies.get(mostRecentCurrData)) {
+            // for (Currency j : i) {
+                
+            System.out.println("What is the conversion rate from " + currency2Add + " to " + c.getName() + "?");
+            Double XRrate = Double.parseDouble(sc.next());
+            // if inputted currency already exists, no not allow
+            currency.addConversionRate(c.getName(), XRrate);
+
+                // String newCurrencyXR = sc.next();
+            System.out.println(currency.getConversionRates());
+            currenciesList.add(c); 
+            // reference went to lines ~223 currenciesList.add(this.currency)
+
+            // adding new currency's to every every other currency's conversion rate (inverse)
+            c.addConversionRate(currency2Add, Math.pow(XRrate, -1));
+        }
+
+        
+        currenciesList.add(currency);
+        this.currencies.put(date2Day, currenciesList);
+
+        // System.out.println(this.currencies);
+        // sc.close();
+
+        writeToFile();
+
+        //TODO
+        // Math.pow(currency, -1) rounding
+        
+    }
+
     public String findMostRecentDate() {
 
         Date mostRecentDate = new Date(0);
@@ -175,8 +218,6 @@ public class DataBase {
     public void writeToFile() {
 
         try {
-
-
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/testData.txt");
 
             //detele file if it exists
@@ -189,8 +230,6 @@ public class DataBase {
             FileWriter fr = new FileWriter(file, true);
             BufferedWriter br = new BufferedWriter(fr);
             
-
-
             for (String key : this.currencies.keySet()) {
                 br.write("date:" + key + "\n");
                 for (Currency c : this.currencies.get(key)) {
