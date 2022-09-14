@@ -51,6 +51,32 @@ public class DataBase {
 
             this.currencies.put(date, curr);
 
+            // close file
+            br.close();
+            fr.close();
+
+            // open popular.txt
+            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            FileReader fr2 = new FileReader(file2);
+            BufferedReader br2 = new BufferedReader(fr2);
+            StringBuffer sb2 = new StringBuffer();
+            String line2;
+
+            while ((line2 = br2.readLine()) != null) {
+                String[] arrOfStr = line2.split(",");
+                for (String a : arrOfStr) {
+                    for (Currency c : curr) {
+                        if (c.getName().equals(a)) {
+                            c.setPopular(true);
+                        }
+                    }
+                }
+            }
+
+            // close
+            br2.close();
+            fr2.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,15 +108,7 @@ public class DataBase {
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
         
         // find string date that is most recent
-        Date mostRecentDate = new Date(0);
-        String mostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
-            Date date = new Date(key);
-            if (date.after(mostRecentDate)) {
-                mostRecentDate = date;
-                mostRecentDateString = key;
-            }
-        }
+        String mostRecentDateString = findMostRecentDate();
 
         // find input currency on date
         Currency inputCurr = null;
@@ -115,6 +133,50 @@ public class DataBase {
 
         // return converted amount
         return amount * conversionRate;
+
+    }
+
+    public String findMostRecentDate() {
+
+        Date mostRecentDate = new Date(0);
+        String mostRecentDateString = "";
+        for (String key: this.currencies.keySet()) {
+            Date date = new Date(key);
+            if (date.after(mostRecentDate)) {
+                mostRecentDate = date;
+                mostRecentDateString = key;
+            }
+        }
+
+        return mostRecentDateString;
+
+    }
+
+    // needed for comparisons in table
+    public String findSecondMostRecentDate() {
+
+        Date mostRecentDate = new Date(0);
+        String mostRecentDateString = "";
+        for (String key: this.currencies.keySet()) {
+            Date date = new Date(key);
+            if (date.after(mostRecentDate)) {
+                mostRecentDate = date;
+                mostRecentDateString = key;
+            }
+        }
+
+        Date secondMostRecentDate = new Date(0);
+        String secondMostRecentDateString = "";
+        for (String key: this.currencies.keySet()) {
+            Date date = new Date(key);
+            if (date.after(secondMostRecentDate) && !date.equals(mostRecentDate)) {
+                secondMostRecentDate = date;
+                secondMostRecentDateString = key;
+            }
+        }
+
+        return secondMostRecentDateString;
+
 
     }
 
