@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
-
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 public class DataBase {
 
@@ -19,22 +21,36 @@ public class DataBase {
         initialiseData();
     }
 
-    public void initialiseData(){
+    public void initialiseData() {
         try {
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            StringBuffer sb = new StringBuffer();
+
             String line;
-            String date = br.readLine();
+            String date = "";
             ArrayList<Currency> curr = new ArrayList<>();
 
-
             while ((line = br.readLine()) != null) {
+
+                if (line.contains("date")) {
+
+                    if (curr.size() > 0 && !date.equals("")) {
+                        this.currencies.put(date, curr);
+                        date = line.substring(5);
+                        curr = new ArrayList<>();
+                    } else {
+                        date = line.substring(5);
+                        curr = new ArrayList<>();
+                    }
+
+                    continue;
+
+                }
+
                 String[] arrOfStr = line.split(" ");
                 int i = 0;
                 Currency currency = null;
-
 
                 for (String a : arrOfStr) {
                     if (i == 0) {
@@ -55,28 +71,6 @@ public class DataBase {
             br.close();
             fr.close();
 
-            // open popular.txt
-            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
-            FileReader fr2 = new FileReader(file2);
-            BufferedReader br2 = new BufferedReader(fr2);
-            StringBuffer sb2 = new StringBuffer();
-            String line2;
-
-            while ((line2 = br2.readLine()) != null) {
-                String[] arrOfStr = line2.split(",");
-                for (String a : arrOfStr) {
-                    for (Currency c : curr) {
-                        if (c.getName().equals(a)) {
-                            c.setPopular(true);
-                        }
-                    }
-                }
-            }
-
-            // close
-            br2.close();
-            fr2.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,10 +83,10 @@ public class DataBase {
     public List<String> getCurrencyNames() {
 
         List<String> currencyNames = new ArrayList<>();
-        
-        for (String key: this.currencies.keySet()) {
 
-            for (Currency currency: this.currencies.get(key)) {
+        for (String key : this.currencies.keySet()) {
+
+            for (Currency currency : this.currencies.get(key)) {
 
                 if (!currencyNames.contains(currency.getName())) {
                     currencyNames.add(currency.getName());
@@ -102,11 +96,65 @@ public class DataBase {
         }
 
         return currencyNames;
-        
+
+    }
+
+    public List<String> findPopularCurrencies() {
+
+        try {
+
+            // open popular.txt
+            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            FileReader fr2 = new FileReader(file2);
+            BufferedReader br2 = new BufferedReader(fr2);
+            String line2;
+
+            List<String> popularCurrencies = new ArrayList<>();
+
+            while ((line2 = br2.readLine()) != null) {
+                String[] arrOfStr = line2.split(",");
+                for (String a : arrOfStr) {
+                    popularCurrencies.add(a);
+                }
+            }
+
+            // close
+            br2.close();
+            fr2.close();
+
+            return popularCurrencies;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public void updatePopularCurrencies(List<String> currencies) {
+
+        try {
+
+            // clear popular.txt
+            PrintWriter writer = new PrintWriter("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            writer.print("");
+
+            // write new popular currencies to popular.txt
+            for (String currency : currencies) {
+                writer.print(currency + ",");
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
-        
+
         // find string date that is most recent
         String mostRecentDateString = findMostRecentDate();
 
@@ -140,7 +188,7 @@ public class DataBase {
 
         Date mostRecentDate = new Date(0);
         String mostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(mostRecentDate)) {
                 mostRecentDate = date;
@@ -157,7 +205,7 @@ public class DataBase {
 
         Date mostRecentDate = new Date(0);
         String mostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(mostRecentDate)) {
                 mostRecentDate = date;
@@ -167,7 +215,7 @@ public class DataBase {
 
         Date secondMostRecentDate = new Date(0);
         String secondMostRecentDateString = "";
-        for (String key: this.currencies.keySet()) {
+        for (String key : this.currencies.keySet()) {
             Date date = new Date(key);
             if (date.after(secondMostRecentDate) && !date.equals(mostRecentDate)) {
                 secondMostRecentDate = date;
@@ -176,9 +224,86 @@ public class DataBase {
         }
 
         return secondMostRecentDateString;
-
-
     }
 
+    public Currency findCurrency(String name, List<Currency> ls) {
+        for (Currency c : ls) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    // update the rate of currency1 in currency2's hashmap
+    // please check the format of date prior to this method
+    // return 1 if successful
+    // 0 if input error, particularly null data
+    // 2 if no currency is found
+    // 3 if currency1 not found
+    public int updateCurrency(String date, String currency1, String currency2, Double newRate1) {
+        // check all input not null
+        if (date == null || currency2 == null || currency1 == null || newRate1 == null) {
+            return 0;
+        }
+
+        String latest = findMostRecentDate();
+        List<Currency> cloned = this.currencies.get(latest);
+
+        // change the rate
+        Currency curr2 = findCurrency(currency2, cloned);
+        if (curr2 == null) {
+            return 2;
+        }
+
+        // update data
+        if (!curr2.getConversionRates().containsKey(currency1)) {
+            return 3;
+        }
+
+        curr2.getConversionRates().replace(currency1, newRate1);
+        this.currencies.put(date, cloned);
+        return(1);
+    }
+
+    public void writeToFile() {
+
+        try {
+
+
+            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+
+            //detele file if it exists
+            if (file.exists()) {
+                file.delete();
+            }
+            //create new file with the same name
+            file.createNewFile();
+
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter br = new BufferedWriter(fr);
+            
+
+
+            for (String key : this.currencies.keySet()) {
+                br.write("date:" + key + "\n");
+                for (Currency c : this.currencies.get(key)) {
+                    br.write(c.getName() + " ");
+                    for (String key2 : c.getConversionRates().keySet()) {
+                        br.write(key2 + ":" + c.getConversionRates().get(key2) + " ");
+                    }
+                    br.write("\n");
+                }
+            }
+
+            // close file
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
