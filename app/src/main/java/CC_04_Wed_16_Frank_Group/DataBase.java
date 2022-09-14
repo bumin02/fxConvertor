@@ -191,10 +191,10 @@ public class DataBase {
         }
 
         String latest = findMostRecentDate();
-        List<Currency> cloned = this.currencies.get(latest);
+        List<Currency> cloned = new ArrayList<>();
 
         // change the rate
-        Currency curr2 = findCurrency(currency2, cloned);
+        Currency curr2 = findCurrency(currency2, this.currencies.get(latest));
         if (curr2 == null) {
             return 2;
         }
@@ -204,9 +204,25 @@ public class DataBase {
             return 3;
         }
 
-        curr2.getConversionRates().replace(currency1, newRate1);
+        // create new currency and add to list
+        Currency c = new Currency(currency2);
+        cloned.add(c);
+
+        for (Currency i: this.currencies.get(latest)) {
+            if (i != curr2) {
+                cloned.add(i);
+            }
+        }
+
+        // update value in the new currency object
+        for (String i: curr2.getConversionRates().keySet()) {
+            if (!i.equals(currency1)) {
+                c.getConversionRates().put(i, curr2.getConversionRates().get(i));
+            }
+        }
+        c.getConversionRates().put(currency1, newRate1);
         this.currencies.put(date, cloned);
-        return(1);
+        return 1;
     }
 
 }
