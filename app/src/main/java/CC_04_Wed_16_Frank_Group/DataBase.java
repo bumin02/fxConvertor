@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 public class DataBase {
 
@@ -222,6 +224,46 @@ public class DataBase {
         }
 
         return secondMostRecentDateString;
+
+    }
+
+    public void writeToFile() {
+
+        try {
+
+
+            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/testData.txt");
+
+            //detele file if it exists
+            if (file.exists()) {
+                file.delete();
+            }
+            //create new file with the same name
+            file.createNewFile();
+
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter br = new BufferedWriter(fr);
+            
+
+
+            for (String key : this.currencies.keySet()) {
+                br.write("date:" + key + "\n");
+                for (Currency c : this.currencies.get(key)) {
+                    br.write(c.getName() + " ");
+                    for (String key2 : c.getConversionRates().keySet()) {
+                        br.write(key2 + ":" + c.getConversionRates().get(key2) + " ");
+                    }
+                    br.write("\n");
+                }
+            }
+
+            // close file
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
