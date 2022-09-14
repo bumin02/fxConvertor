@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +96,60 @@ public class DataBase {
         }
 
         return currencyNames;
+
+    }
+
+    public List<String> findPopularCurrencies() {
+
+        try {
+
+            // open popular.txt
+            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            FileReader fr2 = new FileReader(file2);
+            BufferedReader br2 = new BufferedReader(fr2);
+            String line2;
+
+            List<String> popularCurrencies = new ArrayList<>();
+
+            while ((line2 = br2.readLine()) != null) {
+                String[] arrOfStr = line2.split(",");
+                for (String a : arrOfStr) {
+                    popularCurrencies.add(a);
+                }
+            }
+
+            // close
+            br2.close();
+            fr2.close();
+
+            return popularCurrencies;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public void updatePopularCurrencies(List<String> currencies) {
+
+        try {
+
+            // clear popular.txt
+            PrintWriter writer = new PrintWriter("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            writer.print("");
+
+            // write new popular currencies to popular.txt
+            for (String currency : currencies) {
+                writer.print(currency + ",");
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
