@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
+import java.util.Collections;
+import java.lang.Math;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
@@ -241,17 +244,23 @@ public class DataBase {
     // 0 if input error, particularly null data
     // 2 if no currency is found
     // 3 if currency1 not found
+    // 4 if the date already exists
     public int updateCurrency(String date, String currency1, String currency2, Double newRate1) {
         // check all input not null
         if (date == null || currency2 == null || currency1 == null || newRate1 == null) {
             return 0;
         }
 
+        // check if date already exists
+        if (this.currencies.containsKey(date)) {
+            return 4;
+        }
+
         String latest = findMostRecentDate();
-        List<Currency> cloned = this.currencies.get(latest);
+        List<Currency> cloned = new ArrayList<>();
 
         // change the rate
-        Currency curr2 = findCurrency(currency2, cloned);
+        Currency curr2 = findCurrency(currency2, this.currencies.get(latest));
         if (curr2 == null) {
             return 2;
         }
@@ -261,9 +270,25 @@ public class DataBase {
             return 3;
         }
 
-        curr2.getConversionRates().replace(currency1, newRate1);
+        // create new currency and add to list
+        Currency c = new Currency(currency2);
+        cloned.add(c);
+
+        for (Currency i: this.currencies.get(latest)) {
+            if (i != curr2) {
+                cloned.add(i);
+            }
+        }
+
+        // update value in the new currency object
+        for (String i: curr2.getConversionRates().keySet()) {
+            if (!i.equals(currency1)) {
+                c.getConversionRates().put(i, curr2.getConversionRates().get(i));
+            }
+        }
+        c.getConversionRates().put(currency1, newRate1);
         this.currencies.put(date, cloned);
-        return(1);
+        return 1;
     }
 
     public void writeToFile() {
@@ -304,6 +329,184 @@ public class DataBase {
             e.printStackTrace();
         }
 
+    }
+
+    public static double calculateSD(List<Double> allRates){
+        double sum = 0.0, standardDeviation = 0.0;
+        int length = allRates.size();
+
+        for(double num : allRates) {
+            sum += num;
+        }
+
+        double mean = sum/length;
+
+        for(double num: allRates) {
+            standardDeviation += Math.pow(num - mean, 2);
+        }
+        return Math.sqrt(standardDeviation/length);
+    }
+
+    public double getSD(String dateA, String dateB, String currA, String currB){
+        List<Double> allRates = new ArrayList<Double>();
+        for(String eachDate: this.currencies.keySet()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+            Date dateADate = null;
+            Date dateBDate = null;
+            Date eachDateDate  = null;
+
+            try{
+                dateADate = dateFormat.parse(dateA);
+                dateBDate = dateFormat.parse(dateB);
+                eachDateDate = dateFormat.parse(eachDate);
+            } catch (Exception e) {
+                return 0;
+            }
+
+            if ((eachDate.equals(dateA) || eachDateDate.compareTo(dateADate) > 0) && (eachDate.equals(dateB) || eachDateDate.compareTo(dateBDate) < 0)){
+                for(Currency curr: this.currencies.get(eachDate)){ 
+                    if (curr.getName().equals(currA.toUpperCase())){
+                        Double value = curr.getConversionRates().get(currB.toUpperCase());
+                            allRates.add(value);
+                        }
+                    }
+                }
+            }
+        double standardDeviation = calculateSD(allRates);
+        return standardDeviation;
+    }
+
+    public double getMean(String dateA, String dateB, String currA, String currB){
+        double total = 0;
+        int count = 0;
+        for(String eachDate: this.currencies.keySet()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+            Date dateADate = null;
+            Date dateBDate = null;
+            Date eachDateDate  = null;
+
+            try{
+                dateADate = dateFormat.parse(dateA);
+                dateBDate = dateFormat.parse(dateB);
+                eachDateDate = dateFormat.parse(eachDate);
+            } catch (Exception e) {
+                return 0;
+            }
+
+            if ((eachDate.equals(dateA) || eachDateDate.compareTo(dateADate) > 0) && (eachDate.equals(dateB) || eachDateDate.compareTo(dateBDate) < 0)){
+                for(Currency curr: this.currencies.get(eachDate)){ 
+                    if (curr.getName().equals(currA.toUpperCase())){
+                        Double value = curr.getConversionRates().get(currB.toUpperCase());
+                            count += 1;
+                            total += value;
+                        }
+                    }
+                }
+            }
+        return total/count;
+        }
+
+
+    public double getMedian(String dateA, String dateB, String currA, String currB){
+        List<Double> allRates = new ArrayList<Double>();
+        for(String eachDate: this.currencies.keySet()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+            Date dateADate = null;
+            Date dateBDate = null;
+            Date eachDateDate  = null;
+
+            try{
+                dateADate = dateFormat.parse(dateA);
+                dateBDate = dateFormat.parse(dateB);
+                eachDateDate = dateFormat.parse(eachDate);
+            } catch (Exception e) {
+                return 0;
+            }
+
+            if ((eachDate.equals(dateA) || eachDateDate.compareTo(dateADate) > 0) && (eachDate.equals(dateB) || eachDateDate.compareTo(dateBDate) < 0)){
+                for(Currency curr: this.currencies.get(eachDate)){ 
+                    if (curr.getName().equals(currA.toUpperCase())){
+                        Double value = curr.getConversionRates().get(currB.toUpperCase());
+                            allRates.add(value);
+                        }
+                    }
+                }
+            }
+        int listSize = allRates.size();
+        Collections.sort(allRates);
+        if(listSize%2 != 0 ){
+            int index = (int) Math.ceil(listSize/2);
+            return allRates.get(index);
+        }
+        int index1 = (int) Math.ceil(listSize/2);
+        int index2 = (int) Math.floor(listSize/2);
+        double value1 = allRates.get(index1);
+        double value2 = allRates.get(index2);
+        return (value1+value2)/2;
+        }
+
+
+    public double getMax(String dateA, String dateB, String currA, String currB){
+        double maxAtoB = 0.000001;
+
+        for(String eachDate: this.currencies.keySet()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+            Date dateADate = null;
+            Date dateBDate = null;
+            Date eachDateDate  = null;
+
+            try{
+                dateADate = dateFormat.parse(dateA);
+                dateBDate = dateFormat.parse(dateB);
+                eachDateDate = dateFormat.parse(eachDate);
+            } catch (Exception e) {
+                return 0;
+            }
+
+            if ((eachDate.equals(dateA) || eachDateDate.compareTo(dateADate) > 0) && (eachDate.equals(dateB) || eachDateDate.compareTo(dateBDate) < 0)){
+                for(Currency curr: this.currencies.get(eachDate)){ 
+                    if (curr.getName().equals(currA.toUpperCase())){
+                        Double value = curr.getConversionRates().get(currB.toUpperCase());
+                        if (value > maxAtoB){
+                            maxAtoB = value;
+                        }
+                    }
+                }
+            }
+        }
+        return maxAtoB;
+    }
+
+    public double getMin(String dateA, String dateB, String currA, String currB){
+
+        double minAtoB = 10000000;
+
+        for(String eachDate: this.currencies.keySet()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+            Date dateADate = null;
+            Date dateBDate = null;
+            Date eachDateDate  = null;
+
+            try{
+                dateADate = dateFormat.parse(dateA);
+                dateBDate = dateFormat.parse(dateB);
+                eachDateDate = dateFormat.parse(eachDate);
+            } catch (Exception e) {
+                return 0;
+            }
+
+            if ((eachDate.equals(dateA) || eachDateDate.compareTo(dateADate) > 0) && (eachDate.equals(dateB) || eachDateDate.compareTo(dateBDate) < 0)){
+                for(Currency curr: this.currencies.get(eachDate)){
+                    if (curr.getName().equals(currA.toUpperCase())){
+                        Double value = curr.getConversionRates().get(currB.toUpperCase());
+                        if (value < minAtoB){
+                            minAtoB = value;
+                        }
+                    }
+                }
+            }
+        }
+        return minAtoB;
     }
 
 }
