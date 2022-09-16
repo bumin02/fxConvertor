@@ -1,6 +1,5 @@
 package CC_04_Wed_16_Frank_Group;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class DataBaseTest {
     DataBase dataBase;
@@ -18,10 +16,9 @@ public class DataBaseTest {
         dataBase = new DataBase();
     }
 
-
     @Test
     @DisplayName("Validate correct data structure is created based on input file")
-    public void initialiseDataTest(){
+    public void initialiseDataTest() {
         HashMap<String, List<Currency>> currencies = null;
         dataBase.initialiseData();
         currencies = dataBase.getCurrencies();
@@ -44,7 +41,6 @@ public class DataBaseTest {
     @Test
     @DisplayName("Validate conversion rate update")
     public void testUpdateConversionRate() {
-
 
     }
 
@@ -107,7 +103,7 @@ public class DataBaseTest {
     @DisplayName("Validate Convert Currency function")
     public void testConvertCurrency() {
         dataBase.initialiseData();
-        Float result = dataBase.convertCurrency("AUD","USD", 100);
+        Float result = dataBase.convertCurrency("AUD", "USD", 100);
         assertSame(result.getClass(), Float.class);
     }
 
@@ -124,7 +120,7 @@ public class DataBaseTest {
         Currency cnull = dataBase.findCurrency("USD", currencyList);
         assertNull(cnull);
 
-    }    
+    }
 
     @Test
     @DisplayName("Validate Get Currency names function")
@@ -139,4 +135,27 @@ public class DataBaseTest {
         assertTrue(result.contains("GBP"));
         assertTrue(result.contains("JPY"));
     }
+
+    @Test
+    @DisplayName("Test updatePopularCurrencies Function & getPopularCurrencies Function")
+    public void testUpdatePopularCurrencies() {
+        dataBase.initialiseData();
+
+        List<String> popularCurrencies = new ArrayList<>();
+        popularCurrencies.add("AUD");
+        popularCurrencies.add("USD");
+        popularCurrencies.add("CNY");
+        popularCurrencies.add("EUR");
+
+        dataBase.updatePopularCurrencies(popularCurrencies);
+
+        List<String> result = dataBase.findPopularCurrencies();
+
+        assertTrue(result.contains("AUD"));
+        assertTrue(result.contains("USD"));
+        assertTrue(result.contains("CNY"));
+        assertTrue(result.contains("EUR"));
+
+    }
+
 }
