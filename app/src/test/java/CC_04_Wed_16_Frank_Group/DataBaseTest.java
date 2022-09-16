@@ -76,41 +76,46 @@ public class DataBaseTest {
     @Test
     @DisplayName("Validate Standard Deviation function")
     public void testStandardDeviation() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getSD("30/08/22", "31/08/22", "AUD", "USD");
-        assertSame(result.getClass(), Double.class);
+        //assertSame(result.getClass(), Double.class);
+        assertEquals(result, 4.999999997368221E-8);
     }
 
     @Test
     @DisplayName("Validate Get Mean function")
     public void testGetMean() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMean("30/08/22", "31/08/22", "AUD", "USD");
-        assertSame(result.getClass(), Double.class);
+        //assertSame(result.getClass(), Double.class);
+        assertEquals(result, 0.6856014500000001);
     }
 
     @Test
     @DisplayName("Validate Get Median function")
     public void testGetMedian() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMedian("30/08/22", "31/08/22", "AUD", "USD");
-        assertSame(result.getClass(), Double.class);
+        //assertSame(result.getClass(), Double.class);
+        assertEquals(result, 0.6856015);
     }
 
     @Test
     @DisplayName("Validate Get Max function")
     public void testGetMax() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMax("30/08/22", "31/08/22", "AUD", "USD");
-        assertSame(result.getClass(), Double.class);
+        //assertSame(result.getClass(), Double.class);
+        assertEquals(result, 0.6856015);
     }
 
     @Test
     @DisplayName("Validate Get Min function")
     public void testGetMin() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMin("30/08/22", "31/08/22", "AUD", "USD");
-        assertSame(result.getClass(), Double.class);
+        //assertSame(result.getClass(), Double.class);
+        assertEquals(result, 0.6856014);
     }
 
     @Test
@@ -126,7 +131,6 @@ public class DataBaseTest {
     public void testConvertCurrency() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
         Float result = dataBase.convertCurrency("AUD","USD", 100);
-        Float result = dataBase.convertCurrency("AUD", "USD", 100);
         assertSame(result.getClass(), Float.class);
     }
 
@@ -162,7 +166,7 @@ public class DataBaseTest {
     @Test
     @DisplayName("Test updatePopularCurrencies Function & getPopularCurrencies Function")
     public void testUpdatePopularCurrencies() {
-        dataBase.initialiseData();
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
 
         List<String> popularCurrencies = new ArrayList<>();
         popularCurrencies.add("AUD");
