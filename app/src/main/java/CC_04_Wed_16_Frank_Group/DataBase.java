@@ -22,7 +22,7 @@ public class DataBase {
 
     public DataBase() {
         this.currencies = new HashMap<>();
-
+        initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
     }
 
     public void initialiseData(String path) {
@@ -205,20 +205,35 @@ public class DataBase {
             System.out.println("What is the conversion rate from " + currency2Add + " to " + c.getName() + "?");
             Double XRrate = Double.parseDouble(sc.next());
             // if inputted currency already exists, no not allow
-            currency.addConversionRate(c.getName(), XRrate);
+            currency.addConversionRate(c.getName(), XRrate); // krw -> AUD:1.0
 
-                // String newCurrencyXR = sc.next();
+            // String newCurrencyXR = sc.next();
             System.out.println(currency.getConversionRates());
-            currenciesList.add(c); 
-            // reference went to lines ~223 currenciesList.add(this.currency)
+
+            // create a copy tho
+            currenciesList.add(c);
 
             // adding new currency's to every every other currency's conversion rate (inverse)
-            c.addConversionRate(currency2Add, Math.pow(XRrate, -1));
+            c.addConversionRate(currency2Add, Math.pow(XRrate, -1)); // here is where the duplicate comes from
         }
 
         
         currenciesList.add(currency);
+        // currListCopy.add(currency);
+        // List<Currency> currListCopy = currenciesList;
+        
         this.currencies.put(date2Day, currenciesList);
+        // ISSUE: program doesn't remember prev added currency
+
+        // go to second most recent date, delete new currency xr
+        // ISSUE: program adds newly added currency exchange rate into second most recent date as well
+        // below code works to solve that issue but isnt working?
+        String secondMostRecentCurrData = this.findSecondMostRecentDate(); 
+        for (Currency i : this.currencies.get(secondMostRecentCurrData)) {
+            System.out.println("second last me: " + i);
+            i.conversionRate.remove(currency2Add);
+        }
+
 
         // System.out.println(this.currencies);
         // sc.close();
@@ -337,7 +352,6 @@ public class DataBase {
     public void writeToFile() {
 
         try {
-
 
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
 

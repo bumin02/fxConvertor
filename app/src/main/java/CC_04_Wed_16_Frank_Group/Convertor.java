@@ -2,9 +2,6 @@ package CC_04_Wed_16_Frank_Group;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.Math;
 
 public class Convertor {
 
@@ -12,7 +9,6 @@ public class Convertor {
     private Boolean isAdmin = false;
     private DataBase db;
     private CurrencyTable ct;
-    private Currency currency;
 
     public Convertor() {
 
@@ -156,23 +152,11 @@ public class Convertor {
                     System.out.println("                     From " + c2 + " to "  + c1 + ": "  +  db.getSD(date1, date2, c2, c1));
                     System.out.println("***************************************************");
 
-                        System.out.print("What is the date today (DD/MM/YY): ");
-                        String date2Day = sc.next();
+                    break;
+                case 4:
+                    System.out.println("Type 1 to exit, anything else to continue");
 
-                        Boolean date_invalid = false;
-                        // if date already exists, do not allow (can add random date though)
-                        for (String existing_date : db.currencies.keySet()) {
-                            if (date2Day.equals(existing_date)) {
-                                System.out.println("Invalid date. We already have that date in our system. Please try again.");
-                                date_invalid = true; 
-                            }
-                        }
-                        if (date_invalid) {
-                            break;
-                        }
-
-                        System.out.print("What currency do you want to add: ");
-                        String currency2Add = sc.next();
+                    String exNum = sc.next();
 
                     if (exNum.equals("1")) {
                         toExit = true;
@@ -181,8 +165,8 @@ public class Convertor {
                     System.out.println("-------------------");
 
                     break;
+                case 5:
 
-                case 7:
                     if (isAdmin) {
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
@@ -213,19 +197,51 @@ public class Convertor {
 
                 case 6:
                     if (isAdmin) {
+                                                
+                        /**
+                         * Method for the admin to also add new currency types in addition
+                         *  to the existing currencies and its conversion rates. The most
+                         *  up-to-date currencies should be used in currency conversion and
+                         *  in the most popular currencies table.
+                         *  e.g. database.addCurrency(date2day, currency2Add);
+                         */
+
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
+
+                        Boolean date_invalid = false;
+                        // if date already exists, do not allow (can add random date though)
+                        for (String existing_date : db.currencies.keySet()) {
+                            if (date2Day.equals(existing_date)) {
+                                System.out.println("Invalid date. We already have that date in our system. Please try again.");
+                                date_invalid = true; 
+                            }
+                        }
+                        if (date_invalid) {
+                            break;
+                        }
+
                         System.out.print("What currency do you want to add: ");
                         String currency2Add = sc.next();
 
-                        // TODO
-                        /**
-                         * Method for the admin to also add new currency types in addition
-                         * to the existing currencies and its conversion rates. The most
-                         * up-to-date currencies should be used in currency conversion and
-                         * in the most popular currencies table.
-                         * e.g. database.addCurrency(date2day, currency2Add);
-                         */
+                        // System.out.println("ME " + db.findMostRecentDate());
+                        // System.out.println("me2" + db.currencies.get(db.findMostRecentDate()).getClass());
+
+                        Boolean curr_invalid = false;
+                        for (Currency existing_curr : db.currencies.get("31/08/22")) {
+                            if (currency2Add.equals(existing_curr.getName())) {
+                                System.out.println("Invalid currency. We already have that currency in our system. Please try again.");
+                               curr_invalid = true; 
+                            }
+                        }
+                        if (curr_invalid) {
+                            break;
+                        }
+
+                        // ADD CASES FOR COMPLETELY INVALID DATES OR CURRENCIES
+
+                        db.addCurrency(date2Day, currency2Add);
+                         
                     }
                     break;
 
