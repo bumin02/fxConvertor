@@ -50,7 +50,8 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "**/App.class",
-                    "**/Convertor.class"
+                    "**/Convertor.class",
+                    "**/CurrencyTable.class"
             ])
         }))
     }
