@@ -21,7 +21,7 @@ public class DataBase {
 
     public DataBase() {
         this.currencies = new HashMap<>();
-
+        initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
     }
 
     public void initialiseData(String path) {
