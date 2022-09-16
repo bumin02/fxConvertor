@@ -22,12 +22,12 @@ public class DataBase {
 
     public DataBase() {
         this.currencies = new HashMap<>();
-        initialiseData();
+
     }
 
-    public void initialiseData() {
+    public void initialiseData(String path) {
         try {
-            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+            File file = new File(path);
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
