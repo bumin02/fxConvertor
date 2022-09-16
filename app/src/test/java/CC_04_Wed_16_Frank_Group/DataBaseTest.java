@@ -44,9 +44,28 @@ public class DataBaseTest {
     @Test
     @DisplayName("Validate conversion rate update")
     public void testUpdateConversionRate() {
+        // check error
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
+        assertEquals(0, dataBase.updateCurrency(null, null, null, null));
+        assertEquals(4, dataBase.updateCurrency("31/08/22", "AUD", "JPY", 5.3010));
+        assertEquals(3, dataBase.updateCurrency("1/09/22", "AAA", "JPY", 5.3010));
+        assertEquals(2, dataBase.updateCurrency("1/09/22", "AUD", "AAA", 5.3010));
 
+        // check updated correctly
+        assertEquals(1, dataBase.updateCurrency("1/09/22", "AUD", "USD", 5.3010));
+        assertTrue(dataBase.getCurrencies().containsKey("1/09/22"));
+        List<Currency> ls =  null;
+        ls = dataBase.getCurrencies().get("1/09/22");
+        assertNotNull(ls);
+        assertNotNull(dataBase.findCurrency("AUD", ls));
+        assertNotNull(dataBase.findCurrency("USD", ls));
+        assertEquals(5.3010, dataBase.findCurrency("USD", ls).getConversionRates().get("AUD"));
 
-
+        // check previous data were not changed
+        List<Currency> ls2 = dataBase.getCurrencies().get("31/08/22");
+        assertEquals(2.458886, dataBase.findCurrency("USD", ls2).getConversionRates().get("AUD"));
+        List<Currency> ls3 = dataBase.getCurrencies().get("30/08/22");
+        assertEquals(1.458886, dataBase.findCurrency("USD", ls3).getConversionRates().get("AUD"));
     }
 
     @Test
