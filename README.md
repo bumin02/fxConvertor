@@ -41,7 +41,7 @@ This is a simple exchange rate system which allows the user to interact with a c
   brew install gradle
   ```
   For other installation method, check out https://gradle.org/install/
-* jenkins 
+* jenkins
 
 
 ### Installation
@@ -53,12 +53,23 @@ This is a simple exchange rate system which allows the user to interact with a c
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-### How To Run
+## How To Run
+To run the project, use the below command line:
    ```sh
    gradle build
    gradle run -console plain
    ```
+* To run our simple currency exchange program, sign in as either User or Admin. The password for admin is "admin".
+* You will be prompted to choose between four options if you are a normal user or 7 if you are the admin
+* **Print top 4 currency exchange rates** will show a table with the 4 most popular currencies and their respective exchange rates to each other. An “I” next to a conversion rate indicates that the rate has increased from the day before, whereas a “D” indicates a decrease in the conversion rate.
+* **Summarise conversion rates** will portray a menu of two currencies' statistical relationship based on their historical data, such as the pair's exchange rate minimum, maximum, mean, median and standard deviation. Enter two valid dates, the first date being older than the second date, as well as two existing currencies in the database.
+  The system only accepts valid inputs. In the case that an invalid date such as “aa/234/xy” is given, or that the user searches for a currency that does not exist, the user will be brought back to the options screen.
+* **<ADMIN> Update Conversion Rate** is a special admin-only option. It allows the user to update a currency pair’s exchange rate at most once a day.
+* **<ADMIN> Add New Currency** is a special admin-only option. It allows the user to add a new currency into the database. The user will be prompted to provide the exchange rates from this new currency to every other existing currency.
+* **<ADMIN> Update Popular Currencies** is a special admin-only option. It allows the user to edit their top 4 favourite currencies. The user will be prompted to remove a current popular currency and replace it with another existing currency.
+
+
+
 
 
 <!-- CONTRIBUTING -->
