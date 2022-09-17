@@ -63,7 +63,6 @@ public class DataBaseTest {
         assertEquals(2.458886, dataBase.findCurrency("USD", ls2).getConversionRates().get("AUD"));
         List<Currency> ls3 = dataBase.getCurrencies().get("30/08/22");
         assertEquals(1.458886, dataBase.findCurrency("USD", ls3).getConversionRates().get("AUD"));
-
     }
 
     @Test
@@ -71,6 +70,8 @@ public class DataBaseTest {
     public void testWriteToFile() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
         dataBase.writeToFile();
+        //assert to check if initialData.txt exists
+        assertTrue(dataBase.fileExists("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt"));
     }
 
     @Test
@@ -183,6 +184,45 @@ public class DataBaseTest {
         assertTrue(result.contains("CNY"));
         assertTrue(result.contains("EUR"));
 
+    }
+
+    @Test
+    @DisplayName("Validate add currency")
+    public void testAddCurrency() {
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
+
+        // test error
+        assertEquals(0, dataBase.addCurrency(null, null, null, null));
+        HashMap<String, Double> rates = new HashMap<>();
+        HashMap<String, Double> rateForOtherCurr = new HashMap<>();
+        assertEquals(4, dataBase.addCurrency("31/08/22", "AUD", rates, rateForOtherCurr));
+        assertEquals(3, dataBase.addCurrency("01/09/22", "AUD", rates, rateForOtherCurr));
+
+        // test successful call
+        rates.put("AUD", 2.148119);
+        rates.put("JPY", 3.148119);
+        rates.put("EUR", 4.148119);
+        rates.put("GBP", 5.148119);
+        rates.put("USD", 6.148119);
+        rates.put("CNY", 7.148119);
+
+        rateForOtherCurr.put("AUD", 2.148119);
+        rateForOtherCurr.put("JPY", 3.148119);
+        rateForOtherCurr.put("EUR", 4.148119);
+        rateForOtherCurr.put("GBP", 5.148119);
+        rateForOtherCurr.put("USD", 6.148119);
+        rateForOtherCurr.put("CNY", 7.148119);
+
+        assertEquals(1, dataBase.addCurrency("01/09/22", "ABC", rates, rateForOtherCurr));
+        HashMap<String, List<Currency>> curr = dataBase.getCurrencies();
+        assertTrue(curr.containsKey("01/09/22"));
+        List<Currency> ls = curr.get("01/09/22");
+        Currency currency = dataBase.findCurrency("ABC", ls);
+        assertNotNull(currency);
+        assertEquals(rates, currency.getConversionRates());
+
+        Currency abc = dataBase.findCurrency("AUD", ls);
+        assertEquals(2.148119, abc.getConversionRates().get("ABC"));
     }
 
 }

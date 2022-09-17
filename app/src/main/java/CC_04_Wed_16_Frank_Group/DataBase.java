@@ -157,6 +157,14 @@ public class DataBase {
 
     }
 
+    public boolean fileExists(String path) {
+        File f = new File(path);
+        if (f.exists() && !f.isDirectory()) {
+            return true;
+        }
+        return false;
+    }
+
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
 
         // find string date that is most recent
@@ -325,7 +333,7 @@ public class DataBase {
         if (this.currencies.containsKey(date)) {
             return 4;
         }
-
+ 
         String latest = findMostRecentDate();
         List<Currency> cloned = new ArrayList<>();
 
@@ -574,6 +582,41 @@ public class DataBase {
             }
         }
         return minAtoB;
+    }
+
+    // 0 if input error, particularly null data
+    // 3 if the currency already exists
+    // 4 if the data already exists
+    // 1 if successful
+    public int addCurrency(String date, String currency, HashMap<String, Double> rates, HashMap<String, Double> rateForOtherCurr) {
+        if (date == null || currency == null || rates == null || rateForOtherCurr == null) {
+            return 0;
+        }
+
+        // check if date already exists
+        if (this.currencies.containsKey(date)) {
+            return 4;
+        }
+
+        // check if the currency already exists
+        String latest = findMostRecentDate();
+        if (findCurrency(currency, this.currencies.get(latest)) != null) {
+            return 3;
+        }
+
+        // set up currency object
+        List<Currency> cloned = new ArrayList<>(this.currencies.get(latest));
+        Currency curr = new Currency(currency);
+        curr.setConversionRate(rates);
+
+        // add currency rate to all other currencies hashmap
+        for (Currency c: cloned) {
+            c.getConversionRates().put(currency, rateForOtherCurr.get(c.getName()));
+        }
+
+        cloned.add(curr);
+        this.currencies.put(date, cloned);
+        return 1;
     }
 
 }
