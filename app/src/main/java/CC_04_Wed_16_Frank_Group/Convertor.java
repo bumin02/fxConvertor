@@ -1,5 +1,6 @@
 package CC_04_Wed_16_Frank_Group;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -203,6 +204,9 @@ public class Convertor {
                         System.out.print("What currency do you want to add: ");
                         String currency2Add = sc.next();
 
+                        HashMap<String, Double> rateForCurr = new HashMap<>();
+                        HashMap<String, Double> rateForOtherCurr = new HashMap<>();
+
                         // TODO
                         /**
                          * Method for the admin to also add new currency types in addition
@@ -211,6 +215,17 @@ public class Convertor {
                          * in the most popular currencies table.
                          * e.g. database.addCurrency(date2day, currency2Add);
                          */
+                        String latest = db.findMostRecentDate();
+                        for (Currency c : db.getCurrencies().get(latest)) {
+                            System.out.println(String.format("\nWhat is the rate for converting %s to %s\n", currency2Add, c.getName()));
+                            rateForCurr.put(c.getName(), Double.parseDouble(sc.next()));
+                        }
+                        for (Currency c : db.getCurrencies().get(latest)) {
+                            System.out.println(String.format("\nWhat is the rate for converting %s to %s\n", c.getName(), currency2Add));
+                            rateForOtherCurr.put(c.getName(), Double.parseDouble(sc.next()));
+                        }
+
+                        db.addCurrency(date2Day, currency2Add, rateForCurr, rateForOtherCurr);
                     }
                     break;
 
