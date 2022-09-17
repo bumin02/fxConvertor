@@ -228,7 +228,7 @@ public class Convertor {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
-                            } else if (Integer.parseInt(date1.substring(0, 2)) > 31 || Integer.parseInt(date1.substring(3, 5)) > 12) {
+                            } else if (Integer.parseInt(date2Day.substring(0, 2)) > 31 || Integer.parseInt(date2Day.substring(3, 5)) > 12) {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
@@ -284,7 +284,7 @@ public class Convertor {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
-                            } else if (Integer.parseInt(date1.substring(0, 2)) > 31 || Integer.parseInt(date1.substring(3, 5)) > 12) {
+                            } else if (Integer.parseInt(date2Day.substring(0, 2)) > 31 || Integer.parseInt(date2Day.substring(3, 5)) > 12) {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
