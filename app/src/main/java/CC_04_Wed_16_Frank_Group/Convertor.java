@@ -122,24 +122,45 @@ public class Convertor {
                 case 3:
                     System.out.print("Enter date 1 (DD/MM/YY): ");
                     String date1 = sc.next();
-                    try{
+                    try {
                         SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
-                        Date date1Date = dateFormat.parse(date1);
-                    }catch(Exception e){
+                        Date date2DayDate = dateFormat.parse(date1);
+                        if (date1.length() != 8) {
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        } else if (Integer.parseInt(date1.substring(0, 1)) > 31 || Integer.parseInt(date1.substring(2, 3)) > 12) {
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        }
+                    } catch(Exception e){
                         System.out.println(
                                 "Invalid date. Invalid date format. Please try again.");
                         break;
                     }
+
                     System.out.print("Enter date 2 (DD/MM/YY): ");
                     String date2 = sc.next();
-                    try{
+                    try {
                         SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
-                        Date date2Date = dateFormat.parse(date2);
-                    }catch(Exception e){
+                        Date date2DayDate = dateFormat.parse(date1);
+                        if (date2.length() != 8) {
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        } else if (Integer.parseInt(date2.substring(0, 1)) > 31 || Integer.parseInt(date2.substring(2, 3)) > 12) {
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        }
+                    } catch(Exception e){
                         System.out.println(
                                 "Invalid date. Invalid date format. Please try again.");
                         break;
                     }
+
+
                     System.out.print("Enter currency 1: ");
                     String c1 = sc.next().toUpperCase();
                     if (!db.getCurrencyNames().contains(c1)) {
@@ -169,7 +190,7 @@ public class Convertor {
                     **/
                     System.out.println("Generating summaries:");
                     System.out.println("***************************************************");
-                    System.out.println("MINIMUM: From " + c1 +  " to " + c2 + ": " + db.getMin(date1, date2, c1, c2)); 
+                    System.out.println("MINIMUM: From " + c1 +  " to " + c2 + ": " + db.getMin(date1, date2, c1, c2));
                     System.out.println("         From " + c2 + " to "  + c1 + ": "  + db.getMin(date1, date2, c2, c1));
                     System.out.println("MAXIMUM: From " + c1 +  " to " + c2 + ": " + db.getMax(date1, date2, c1, c2));
                     System.out.println("         From " + c2 + " to "  + c1 + ": "  +  db.getMax(date1, date2, c2, c1));
@@ -234,7 +255,7 @@ public class Convertor {
 
                 case 6:
                     if (isAdmin) {
-                                                
+
                         /**
                          * Method for the admin to also add new currency types in addition
                          *  to the existing currencies and its conversion rates. The most
@@ -245,10 +266,20 @@ public class Convertor {
 
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
-                        try{
+                        try {
                             SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
                             Date date2DayDate = dateFormat.parse(date2Day);
-                        }catch(Exception e){
+                            if (date2Day.length() != 8) {
+                                System.out.println(
+                                        "Invalid date. Invalid date format. Please try again.");
+                                break;
+                            } else if (Integer.parseInt(date2Day.substring(0, 1)) > 31 || Integer.parseInt(date2Day.substring(2, 3)) > 12) {
+                                System.out.println(
+                                        "Invalid date. Invalid date format. Please try again.");
+                                break;
+                            }
+
+                        } catch(Exception e){
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
