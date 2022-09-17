@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.lang.Math;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.util.Scanner;
 
 public class DataBase {
 
@@ -156,6 +157,14 @@ public class DataBase {
 
     }
 
+    public boolean fileExists(String path) {
+        File f = new File(path);
+        if (f.exists() && !f.isDirectory()) {
+            return true;
+        }
+        return false;
+    }
+
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
 
         // find string date that is most recent
@@ -185,6 +194,75 @@ public class DataBase {
         // return converted amount
         return amount * conversionRate;
 
+    }
+
+    public void addCurrency(String date2Day, String currency2Add) {
+        
+        Scanner sc = new Scanner(System.in);
+        // add to hashmap, which will then be fed into a txtfile
+        // addCurrency method calls writeToFile (?)
+        Currency currency = new Currency(currency2Add);
+        List<Currency> currenciesList = new ArrayList<>();
+
+        // find most recent date
+        String mostRecentCurrData = this.findMostRecentDate(); 
+
+        for (Currency c : this.currencies.get(mostRecentCurrData)) {
+            // for (Currency j : i) {
+                
+            System.out.println("What is the conversion rate from " + currency2Add + " to " + c.getName() + "?");
+            Double XRrate = Double.parseDouble(sc.next());
+            // if inputted currency already exists, no not allow
+            currency.addConversionRate(c.getName(), XRrate); // krw -> AUD:1.0
+
+            // String newCurrencyXR = sc.next();
+            System.out.println(currency.getConversionRates());
+
+            // create a copy tho
+            currenciesList.add(c);
+
+            // adding new currency's to every every other currency's conversion rate (inverse)
+            c.addConversionRate(currency2Add, Math.pow(XRrate, -1)); // here is where the duplicate comes from
+        }
+
+        
+        currenciesList.add(currency);
+        // currListCopy.add(currency);
+        // List<Currency> currListCopy = currenciesList;
+        
+        this.currencies.put(date2Day, currenciesList);
+        // ISSUE: program doesn't remember prev added currency
+
+        // go to second most recent date, delete new currency xr
+        // ISSUE: program adds newly added currency exchange rate into second most recent date as well
+        // below code works to solve that issue but isnt working?
+        String secondMostRecentCurrData = this.findSecondMostRecentDate(); 
+        // for (Currency i : this.currencies.get(secondMostRecentCurrData)) {
+        for (Currency i : this.currencies.get(mostRecentCurrData)) {
+            System.out.println("---");
+            System.out.println("name: " + i.getName());
+            System.out.println("xr rates: " + i.getConversionRates());
+            System.out.println("---");
+            i.removeConversionRate(currency2Add);
+        }
+
+        // for curr in krw:
+        //     curr.put(krw, curr.value ^ -1)
+
+        // HashMap<String, List<Currency>> currencies;
+
+        System.out.println(this.currencies.get(date2Day));
+
+        // System.out.println(this.currencies);
+        // sc.close();
+
+        // System.out.println(this.currencies.get(date2Day));
+
+        writeToFile();
+
+        //TODO
+        // Math.pow(currency, -1) rounding
+        
     }
 
     public String findMostRecentDate() {
@@ -255,7 +333,7 @@ public class DataBase {
         if (this.currencies.containsKey(date)) {
             return 4;
         }
-
+ 
         String latest = findMostRecentDate();
         List<Currency> cloned = new ArrayList<>();
 
@@ -295,7 +373,6 @@ public class DataBase {
 
         try {
 
-
             File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
 
             //detele file if it exists
@@ -308,8 +385,6 @@ public class DataBase {
             FileWriter fr = new FileWriter(file, true);
             BufferedWriter br = new BufferedWriter(fr);
             
-
-
             for (String key : this.currencies.keySet()) {
                 br.write("date:" + key + "\n");
                 for (Currency c : this.currencies.get(key)) {
