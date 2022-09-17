@@ -70,6 +70,8 @@ public class DataBaseTest {
     public void testWriteToFile() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
         dataBase.writeToFile();
+        //assert to check if initialData.txt exists
+        assertTrue(dataBase.fileExists("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt"));
     }
 
     @Test

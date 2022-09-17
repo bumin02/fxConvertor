@@ -3,6 +3,8 @@ package CC_04_Wed_16_Frank_Group;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Convertor {
 
@@ -120,12 +122,38 @@ public class Convertor {
                 case 3:
                     System.out.print("Enter date 1 (DD/MM/YY): ");
                     String date1 = sc.next();
+                    try{
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+                        Date date1Date = dateFormat.parse(date1);
+                    }catch(Exception e){
+                        System.out.println(
+                                "Invalid date. Invalid date format. Please try again.");
+                        break;
+                    }
                     System.out.print("Enter date 2 (DD/MM/YY): ");
                     String date2 = sc.next();
+                    try{
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+                        Date date2Date = dateFormat.parse(date2);
+                    }catch(Exception e){
+                        System.out.println(
+                                "Invalid date. Invalid date format. Please try again.");
+                        break;
+                    }
                     System.out.print("Enter currency 1: ");
-                    String c1 = sc.next();
+                    String c1 = sc.next().toUpperCase();
+                    if (!db.getCurrencyNames().contains(c1)) {
+                        System.out.println(
+                                "Invalid currency. We do not store that currency in our system. Please try again.");
+                        break;
+                    }
                     System.out.print("Enter currency 2: ");
-                    String c2 = sc.next();
+                    String c2 = sc.next().toUpperCase();
+                    if (!db.getCurrencyNames().contains(c1)) {
+                        System.out.println(
+                                "Invalid currency. We do not store that currency in our system. Please try again.");
+                        break;
+                    }
 
                     System.out.println("Summary of " + c1 + " and " + c2 + " between " + date1 +
                             " and " + date2 + ": ");
@@ -137,7 +165,6 @@ public class Convertor {
                      * This includes all conversion rates, average, median, maximum,
                      * minimum and standard deviation of the conversion rate of the 2
                      * currencies during the specified start and end date.
-<<<<<<< HEAD
                      *  e.g. dataBase.summarise(date1, date2, c1, c2);
                     **/
                     System.out.println("Generating summaries:");
@@ -172,6 +199,14 @@ public class Convertor {
                     if (isAdmin) {
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
+                        try{
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+                            Date date2DayDate = dateFormat.parse(date2Day);
+                        }catch(Exception e){
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        }
                         System.out.print("Which currency do you want to update: ");
                         String currency2Update = sc.next();
                         System.out.print("Enter currency pair to update: ");
@@ -199,8 +234,38 @@ public class Convertor {
 
                 case 6:
                     if (isAdmin) {
+                                                
+                        /**
+                         * Method for the admin to also add new currency types in addition
+                         *  to the existing currencies and its conversion rates. The most
+                         *  up-to-date currencies should be used in currency conversion and
+                         *  in the most popular currencies table.
+                         *  e.g. database.addCurrency(date2day, currency2Add);
+                         */
+
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
+                        try{
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
+                            Date date2DayDate = dateFormat.parse(date2Day);
+                        }catch(Exception e){
+                            System.out.println(
+                                    "Invalid date. Invalid date format. Please try again.");
+                            break;
+                        }
+
+                        Boolean date_invalid = false;
+                        // if date already exists, do not allow (can add random date though)
+                        for (String existing_date : db.currencies.keySet()) {
+                            if (date2Day.equals(existing_date)) {
+                                System.out.println("Invalid date. We already have that date in our system. Please try again.");
+                                date_invalid = true; 
+                            }
+                        }
+                        if (date_invalid) {
+                            break;
+                        }
+
                         System.out.print("What currency do you want to add: ");
                         String currency2Add = sc.next();
 
@@ -226,6 +291,7 @@ public class Convertor {
                         }
 
                         db.addCurrency(date2Day, currency2Add, rateForCurr, rateForOtherCurr);
+
                     }
                     break;
 
