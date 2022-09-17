@@ -130,7 +130,7 @@ public class Convertor {
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
-                        } else if (Integer.parseInt(date1.substring(0, 1)) > 31 || Integer.parseInt(date1.substring(2, 3)) > 12) {
+                        } else if (Integer.parseInt(date1.substring(0, 2)) > 31 || Integer.parseInt(date1.substring(3, 5)) > 12) {
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
@@ -221,10 +221,20 @@ public class Convertor {
                     if (isAdmin) {
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
-                        try{
+                        try {
                             SimpleDateFormat dateFormat = new SimpleDateFormat(("dd/MM/yy"));
                             Date date2DayDate = dateFormat.parse(date2Day);
-                        }catch(Exception e){
+                            if (date2Day.length() != 8) {
+                                System.out.println(
+                                        "Invalid date. Invalid date format. Please try again.");
+                                break;
+                            } else if (Integer.parseInt(date1.substring(0, 2)) > 31 || Integer.parseInt(date1.substring(3, 5)) > 12) {
+                                System.out.println(
+                                        "Invalid date. Invalid date format. Please try again.");
+                                break;
+                            }
+
+                        } catch(Exception e){
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
@@ -274,7 +284,7 @@ public class Convertor {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
-                            } else if (Integer.parseInt(date2Day.substring(0, 1)) > 31 || Integer.parseInt(date2Day.substring(2, 3)) > 12) {
+                            } else if (Integer.parseInt(date1.substring(0, 2)) > 31 || Integer.parseInt(date1.substring(3, 5)) > 12) {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
