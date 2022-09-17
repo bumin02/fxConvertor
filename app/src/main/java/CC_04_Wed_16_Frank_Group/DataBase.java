@@ -509,7 +509,10 @@ public class DataBase {
         return minAtoB;
     }
 
-
+    // 0 if input error, particularly null data
+    // 3 if the currency already exists
+    // 4 if the data already exists
+    // 1 if successful
     public int addCurrency(String date, String currency, HashMap<String, Double> rates, HashMap<String, Double> rateForOtherCurr) {
         if (date == null || currency == null || rates == null || rateForOtherCurr == null) {
             return 0;
@@ -520,12 +523,15 @@ public class DataBase {
             return 4;
         }
 
-        // create a new currency object
+        // check if the currency already exists
         String latest = findMostRecentDate();
-        List<Currency> cloned = new ArrayList<>(this.currencies.get(latest));
-        Currency curr = new Currency(currency);
+        if (findCurrency(currency, this.currencies.get(latest)) != null) {
+            return 3;
+        }
 
         // set up currency object
+        List<Currency> cloned = new ArrayList<>(this.currencies.get(latest));
+        Currency curr = new Currency(currency);
         curr.setConversionRate(rates);
 
         // add currency rate to all other currencies hashmap
