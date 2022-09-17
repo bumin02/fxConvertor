@@ -136,7 +136,6 @@ public class Convertor {
                      * This includes all conversion rates, average, median, maximum,
                      * minimum and standard deviation of the conversion rate of the 2
                      * currencies during the specified start and end date.
-<<<<<<< HEAD
                      *  e.g. dataBase.summarise(date1, date2, c1, c2);
                     **/
                     System.out.println("Generating summaries:");
@@ -198,19 +197,51 @@ public class Convertor {
 
                 case 6:
                     if (isAdmin) {
+                                                
+                        /**
+                         * Method for the admin to also add new currency types in addition
+                         *  to the existing currencies and its conversion rates. The most
+                         *  up-to-date currencies should be used in currency conversion and
+                         *  in the most popular currencies table.
+                         *  e.g. database.addCurrency(date2day, currency2Add);
+                         */
+
                         System.out.print("What is the date today (DD/MM/YY): ");
                         String date2Day = sc.next();
+
+                        Boolean date_invalid = false;
+                        // if date already exists, do not allow (can add random date though)
+                        for (String existing_date : db.currencies.keySet()) {
+                            if (date2Day.equals(existing_date)) {
+                                System.out.println("Invalid date. We already have that date in our system. Please try again.");
+                                date_invalid = true; 
+                            }
+                        }
+                        if (date_invalid) {
+                            break;
+                        }
+
                         System.out.print("What currency do you want to add: ");
                         String currency2Add = sc.next();
 
-                        // TODO
-                        /**
-                         * Method for the admin to also add new currency types in addition
-                         * to the existing currencies and its conversion rates. The most
-                         * up-to-date currencies should be used in currency conversion and
-                         * in the most popular currencies table.
-                         * e.g. database.addCurrency(date2day, currency2Add);
-                         */
+                        // System.out.println("ME " + db.findMostRecentDate());
+                        // System.out.println("me2" + db.currencies.get(db.findMostRecentDate()).getClass());
+
+                        Boolean curr_invalid = false;
+                        for (Currency existing_curr : db.currencies.get("31/08/22")) {
+                            if (currency2Add.equals(existing_curr.getName())) {
+                                System.out.println("Invalid currency. We already have that currency in our system. Please try again.");
+                               curr_invalid = true; 
+                            }
+                        }
+                        if (curr_invalid) {
+                            break;
+                        }
+
+                        // ADD CASES FOR COMPLETELY INVALID DATES OR CURRENCIES
+
+                        db.addCurrency(date2Day, currency2Add);
+                         
                     }
                     break;
 
