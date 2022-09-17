@@ -228,7 +228,7 @@ public class Convertor {
                         // System.out.println("me2" + db.currencies.get(db.findMostRecentDate()).getClass());
 
                         Boolean curr_invalid = false;
-                        for (Currency existing_curr : db.currencies.get("31/08/22")) {
+                        for (Currency existing_curr : db.currencies.get("31/08/22")) { // CHANGE
                             if (currency2Add.equals(existing_curr.getName())) {
                                 System.out.println("Invalid currency. We already have that currency in our system. Please try again.");
                                curr_invalid = true; 
