@@ -21,6 +21,7 @@ public class Convertor {
     }
 
     public void runConvertor() {
+        db.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
 
         Scanner sc = new Scanner(System.in);
 
