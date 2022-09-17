@@ -20,7 +20,7 @@ public class DataBaseTest {
     @DisplayName("Validate correct data structure is created based on input file")
     public void initialiseDataTest() {
         HashMap<String, List<Currency>> currencies = null;
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testData.txt");
         currencies = dataBase.getCurrencies();
 
         // assert that the currencies hashmap is created
