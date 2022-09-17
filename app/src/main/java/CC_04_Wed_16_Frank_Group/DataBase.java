@@ -229,14 +229,26 @@ public class DataBase {
         // ISSUE: program adds newly added currency exchange rate into second most recent date as well
         // below code works to solve that issue but isnt working?
         String secondMostRecentCurrData = this.findSecondMostRecentDate(); 
-        for (Currency i : this.currencies.get(secondMostRecentCurrData)) {
-            System.out.println("second last me: " + i);
-            i.conversionRate.remove(currency2Add);
+        // for (Currency i : this.currencies.get(secondMostRecentCurrData)) {
+        for (Currency i : this.currencies.get(mostRecentCurrData)) {
+            System.out.println("---");
+            System.out.println("name: " + i.getName());
+            System.out.println("xr rates: " + i.getConversionRates());
+            System.out.println("---");
+            i.removeConversionRate(currency2Add);
         }
 
+        // for curr in krw:
+        //     curr.put(krw, curr.value ^ -1)
+
+        // HashMap<String, List<Currency>> currencies;
+
+        System.out.println(this.currencies.get(date2Day));
 
         // System.out.println(this.currencies);
         // sc.close();
+
+        // System.out.println(this.currencies.get(date2Day));
 
         writeToFile();
 
