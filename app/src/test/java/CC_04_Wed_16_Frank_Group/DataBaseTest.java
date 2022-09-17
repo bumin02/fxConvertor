@@ -63,7 +63,6 @@ public class DataBaseTest {
         assertEquals(2.458886, dataBase.findCurrency("USD", ls2).getConversionRates().get("AUD"));
         List<Currency> ls3 = dataBase.getCurrencies().get("30/08/22");
         assertEquals(1.458886, dataBase.findCurrency("USD", ls3).getConversionRates().get("AUD"));
-
     }
 
     @Test

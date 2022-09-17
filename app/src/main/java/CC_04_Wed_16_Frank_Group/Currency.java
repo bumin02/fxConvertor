@@ -23,4 +23,8 @@ public class Currency {
         return this.name;
     }
 
+    public void setConversionRate(HashMap<String, Double> conversion) {
+        this.conversionRate = conversion;
+    }
+
 }

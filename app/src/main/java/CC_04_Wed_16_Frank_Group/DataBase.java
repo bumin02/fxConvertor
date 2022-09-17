@@ -509,4 +509,33 @@ public class DataBase {
         return minAtoB;
     }
 
+
+    public int addCurrency(String date, String currency, HashMap<String, Double> rates, HashMap<String, Double> rateForOtherCurr) {
+        if (date == null || currency == null || rates == null || rateForOtherCurr == null) {
+            return 0;
+        }
+
+        // check if date already exists
+        if (this.currencies.containsKey(date)) {
+            return 4;
+        }
+
+        // create a new currency object
+        String latest = findMostRecentDate();
+        List<Currency> cloned = new ArrayList<>(this.currencies.get(latest));
+        Currency curr = new Currency(currency);
+
+        // set up currency object
+        curr.setConversionRate(rates);
+
+        // add currency rate to all other currencies hashmap
+        for (Currency c: cloned) {
+            c.getConversionRates().put(currency, rateForOtherCurr.get(c.getName()));
+        }
+
+        cloned.add(curr);
+        this.currencies.put(date, cloned);
+        return 1;
+    }
+
 }
