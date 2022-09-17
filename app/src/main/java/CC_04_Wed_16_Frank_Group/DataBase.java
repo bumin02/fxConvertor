@@ -157,6 +157,14 @@ public class DataBase {
 
     }
 
+    public boolean fileExists(String path) {
+        File f = new File(path);
+        if (f.exists() && !f.isDirectory()) {
+            return true;
+        }
+        return false;
+    }
+
     public float convertCurrency(String inputCurrency, String outputCurrency, float amount) {
 
         // find string date that is most recent
@@ -325,7 +333,7 @@ public class DataBase {
         if (this.currencies.containsKey(date)) {
             return 4;
         }
-
+ 
         String latest = findMostRecentDate();
         List<Currency> cloned = new ArrayList<>();
 
