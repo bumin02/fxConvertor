@@ -232,13 +232,17 @@ public class Convertor {
                                 System.out.println(
                                         "Invalid date. Invalid date format. Please try again.");
                                 break;
+                            } else if (db.getCurrencies().containsKey(date2Day)) {
+                                System.out.println("Date already exists in database, please try again.");
+                                break;
                             }
-
                         } catch(Exception e){
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
                         }
+
+
                         System.out.print("Which currency do you want to update: ");
                         String currency2Update = sc.next();
                         System.out.print("Enter currency pair to update: ");
