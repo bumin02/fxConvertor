@@ -23,9 +23,59 @@ public class CurrencyTable {
     public String displayText(List<Currency> oldCurrencies, List<Currency> newCurrencies, String codeFrom,
             String codeTo) {
 
+<<<<<<< Updated upstream
         // find the exchange rate from codeFrom to codeTo from the newCurrencies
         Currency newCurrencyFrom = findCurrency(codeFrom, newCurrencies);
         double newExchangeRate = newCurrencyFrom.getConversionRates().get(codeTo);
+=======
+        public String displayText(List<Currency> oldCurrencies, List<Currency> newCurrencies, String codeFrom,
+                        String codeTo) {
+
+                // find the exchange rate from codeFrom to codeTo from the newCurrencies
+                Currency newCurrencyFrom = findCurrency(codeFrom, newCurrencies);
+
+                double newExchangeRate = newCurrencyFrom.getConversionRates().get(codeTo);
+
+                // find the exchange rate from codeFrom to codeTo from the oldCurrencies
+                Currency oldCurrencyFrom = findCurrency(codeFrom, oldCurrencies);
+                if (oldCurrencyFrom == null) {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return String.valueOf(newExchangeRate).substring(0, 8);
+                        } else {
+                                return String.valueOf(newExchangeRate);
+                        }
+                }
+
+                if (oldCurrencyFrom.getConversionRates().get(codeTo) == null) {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return String.valueOf(newExchangeRate).substring(0, 8);
+                        } else {
+                                return String.valueOf(newExchangeRate);
+                        }
+                }
+
+                double oldExchangeRate = oldCurrencyFrom.getConversionRates().get(codeTo);
+
+                if (oldExchangeRate < newExchangeRate) {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return (String.valueOf(newExchangeRate).substring(0, 7) + " (U)");
+                        } else {
+                                return (String.valueOf(newExchangeRate) + " (U)");
+                        }
+                } else if (oldExchangeRate > newExchangeRate) {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return (String.valueOf(newExchangeRate).substring(0, 7) + " (D)");
+                        } else {
+                                return (String.valueOf(newExchangeRate) + " (D)");
+                        }
+                } else {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return String.valueOf(newExchangeRate).substring(0, 7);
+                        } else {
+                                return String.valueOf(newExchangeRate);
+                        }
+                }
+>>>>>>> Stashed changes
 
         // find the exchange rate from codeFrom to codeTo from the oldCurrencies
         Currency oldCurrencyFrom = findCurrency(codeFrom, oldCurrencies);
