@@ -150,7 +150,7 @@ public class Convertor {
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;
-                        } else if (Integer.parseInt(date2.substring(0, 1)) > 31 || Integer.parseInt(date2.substring(2, 3)) > 12) {
+                        } else if (Integer.parseInt(date2.substring(0, 2)) > 31 || Integer.parseInt(date2.substring(3, 5)) > 12) {
                             System.out.println(
                                     "Invalid date. Invalid date format. Please try again.");
                             break;

@@ -19,10 +19,6 @@ public class Currency {
         return this.conversionRate;
     }
 
-    public void removeConversionRate(String name) {
-        this.conversionRate.remove(name);
-    }
-
     public String getName() {
         return this.name;
     }

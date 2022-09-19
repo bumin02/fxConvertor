@@ -58,7 +58,16 @@ public class CurrencyTable {
                         if (String.valueOf(newExchangeRate).length() > 6) {
                                 return (String.valueOf(newExchangeRate).substring(0, 7) + " (D)");
                         } else {
+                                return (String.valueOf(newExchangeRate).substring(0, 7) + " (D)");
+                        } else {
                                 return (String.valueOf(newExchangeRate) + " (D)");
+                        }
+                } else if (oldExchangeRate > newExchangeRate) {
+                        if (String.valueOf(newExchangeRate).length() > 6) {
+                                return (String.valueOf(newExchangeRate).substring(0, 7) + " (U)");
+                        } else {
+                                return (String.valueOf(newExchangeRate) + " (U)");
+
                         }
                 } else {
                         if (String.valueOf(newExchangeRate).length() > 6) {
