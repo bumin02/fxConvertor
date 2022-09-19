@@ -51,7 +51,7 @@ public class DataBaseTest {
         // check updated correctly
         assertEquals(1, dataBase.updateCurrency("1/09/22", "AUD", "USD", 5.3010));
         assertTrue(dataBase.getCurrencies().containsKey("1/09/22"));
-        List<Currency> ls =  null;
+        List<Currency> ls = null;
         ls = dataBase.getCurrencies().get("1/09/22");
         assertNotNull(ls);
         assertNotNull(dataBase.findCurrency("AUD", ls));
@@ -68,10 +68,10 @@ public class DataBaseTest {
     @Test
     @DisplayName("Write to file")
     public void testWriteToFile() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         dataBase.writeToFile();
-        //assert to check if initialData.txt exists
-        assertTrue(dataBase.fileExists("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt"));
+        // assert to check if testFile1.txt exists
+        assertTrue(dataBase.fileExists("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt"));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class DataBaseTest {
     public void testStandardDeviation() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getSD("30/08/22", "31/08/22", "AUD", "USD");
-        //assertSame(result.getClass(), Double.class);
+        // assertSame(result.getClass(), Double.class);
         assertEquals(result, 4.999999997368221E-8);
     }
 
@@ -88,7 +88,7 @@ public class DataBaseTest {
     public void testGetMean() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMean("30/08/22", "31/08/22", "AUD", "USD");
-        //assertSame(result.getClass(), Double.class);
+        // assertSame(result.getClass(), Double.class);
         assertEquals(result, 0.6856014500000001);
     }
 
@@ -97,7 +97,7 @@ public class DataBaseTest {
     public void testGetMedian() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMedian("30/08/22", "31/08/22", "AUD", "USD");
-        //assertSame(result.getClass(), Double.class);
+        // assertSame(result.getClass(), Double.class);
         assertEquals(result, 0.6856015);
     }
 
@@ -106,7 +106,7 @@ public class DataBaseTest {
     public void testGetMax() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMax("30/08/22", "31/08/22", "AUD", "USD");
-        //assertSame(result.getClass(), Double.class);
+        // assertSame(result.getClass(), Double.class);
         assertEquals(result, 0.6856015);
     }
 
@@ -115,30 +115,32 @@ public class DataBaseTest {
     public void testGetMin() {
         dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         Double result = dataBase.getMin("30/08/22", "31/08/22", "AUD", "USD");
-        //assertSame(result.getClass(), Double.class);
+        // assertSame(result.getClass(), Double.class);
         assertEquals(result, 0.6856014);
     }
 
     @Test
     @DisplayName("Validate Find Second Most Recent Date function")
     public void testSecondMostRecentDate() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         String result = dataBase.findSecondMostRecentDate();
         assertSame(result.getClass(), String.class);
+        assertEquals(result, "30/08/22");
     }
 
     @Test
     @DisplayName("Validate Convert Currency function")
     public void testConvertCurrency() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
-        Float result = dataBase.convertCurrency("AUD","USD", 100);
-        assertSame(result.getClass(), Float.class);
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
+        float result = dataBase.convertCurrency("AUD", "USD", 100);
+        // compare with 0.0001 precision
+        assertEquals(result, 68.56015, 0.0001);
     }
 
     @Test
     @DisplayName("Validate Find Currency function")
     public void testFindCurrency() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         List<Currency> currencyList = new ArrayList<>();
         Currency currency = new Currency("AUD");
         currencyList.add(currency);
@@ -153,7 +155,7 @@ public class DataBaseTest {
     @Test
     @DisplayName("Validate Get Currency names function")
     public void testGetCurrencyNames() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
         List<String> result = dataBase.getCurrencyNames();
         assertSame(result.getClass(), ArrayList.class);
         assertTrue(result.contains("AUD"));
@@ -167,7 +169,7 @@ public class DataBaseTest {
     @Test
     @DisplayName("Test updatePopularCurrencies Function & getPopularCurrencies Function")
     public void testUpdatePopularCurrencies() {
-        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+        dataBase.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/testFile1.txt");
 
         List<String> popularCurrencies = new ArrayList<>();
         popularCurrencies.add("AUD");
