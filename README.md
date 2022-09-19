@@ -28,7 +28,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is a simple exchange rate system which allows the user to interact with a command line interface that allows for basic exchange rate application functionalities. More details will be av
+This is a simple exchange rate system which allows the user to interact with a command line interface that allows for basic exchange rate application functionalities. More details will be avaliable below
 
 
 ## Getting Started
