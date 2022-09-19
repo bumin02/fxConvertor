@@ -313,7 +313,7 @@ public class Convertor {
                         }
 
                         System.out.print("What currency do you want to add: ");
-                        String currency2Add = sc.next();
+                        String currency2Add = sc.next().toUpperCase();
 
                         HashMap<String, Double> rateForCurr = new HashMap<>();
                         HashMap<String, Double> rateForOtherCurr = new HashMap<>();
