@@ -1,4 +1,4 @@
-package CC_04_Wed_16_Frank_Group;
+package fxConverter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,26 +6,26 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Convertor {
+public class Converter {
 
     private String password = "admin";
     private Boolean isAdmin = false;
     private DataBase db;
     private CurrencyTable ct;
 
-    public Convertor() {
+    public Converter() {
 
         this.db = new DataBase();
         this.ct = new CurrencyTable(this.db);
 
     }
 
-    public void runConvertor() {
-        db.initialiseData("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+    public void runConverter() {
+        db.initialiseData("src/main/java/fxConverter/initialData.txt");
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Launching convertor...");
+        System.out.println("Launching converter...");
 
         System.out.print("Are you admin (Y/N)? ");
 
@@ -34,7 +34,7 @@ public class Convertor {
         if (!adminInput.toUpperCase().equals("Y") &&
                 !adminInput.toUpperCase().equals("N")) {
             System.out.println("\nInvalid input. Please try again.\n");
-            runConvertor();
+            runConverter();
         }
 
         if (adminInput.toUpperCase().equals("Y")) {
@@ -61,7 +61,7 @@ public class Convertor {
 
         }
 
-        System.out.println("Entering convertor system...");
+        System.out.println("Entering converter system...");
 
         while (sc.hasNextLine()) {
 

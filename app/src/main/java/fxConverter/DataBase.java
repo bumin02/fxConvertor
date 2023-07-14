@@ -1,4 +1,4 @@
-package CC_04_Wed_16_Frank_Group;
+package fxConverter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -108,7 +108,7 @@ public class DataBase {
         try {
 
             // open popular.txt
-            File file2 = new File("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            File file2 = new File("src/main/java/fxConverter/popular.txt");
             FileReader fr2 = new FileReader(file2);
             BufferedReader br2 = new BufferedReader(fr2);
             String line2;
@@ -141,7 +141,7 @@ public class DataBase {
         try {
 
             // clear popular.txt
-            PrintWriter writer = new PrintWriter("src/main/java/CC_04_Wed_16_Frank_Group/popular.txt");
+            PrintWriter writer = new PrintWriter("src/main/java/fxConverter/popular.txt");
             writer.print("");
 
             // write new popular currencies to popular.txt
@@ -326,7 +326,7 @@ public class DataBase {
 
         try {
 
-            File file = new File("src/main/java/CC_04_Wed_16_Frank_Group/initialData.txt");
+            File file = new File("src/main/java/fxConverter/initialData.txt");
 
             // detele file if it exists
             if (file.exists()) {

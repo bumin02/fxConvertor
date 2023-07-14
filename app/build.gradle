@@ -34,7 +34,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'CC_04_Wed_16_Frank_Group.App'
+    mainClass = 'fxConverter.App'
 }
 
 tasks.named('test') {
@@ -50,7 +50,7 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "**/App.class",
-                    "**/Convertor.class",
+                    "**/converter.class",
                     "**/CurrencyTable.class"
             ])
         }))
