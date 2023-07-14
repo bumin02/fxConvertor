@@ -64,18 +64,6 @@ To run the project, use the below command line:
 * **6. ADMIN: Add New Currency** is a special admin-only option. It allows the user to add a new currency into the database. The user will be prompted to provide the exchange rates from this new currency to every other existing currency.
 * **7. ADMIN: Update Popular Currencies** is a special admin-only option. It allows the user to edit their top 4 favourite currencies. The user will be prompted to remove a current popular currency and replace it with another existing currency.
 
-<!-- CONTRIBUTING -->
-## Contributing
-
-Feel free to contribute to our project! Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repository and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b yourBranch`)
-3. Commit your Changes (`git commit -m 'Add some Feature'`)
-4. Push to the Branch (`git push origin yourBranch`)
-5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
